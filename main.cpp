@@ -1,3 +1,6 @@
+/**
+* A small test application for OpenCV
+*/
 #include <iostream>
 #include <opencv2/opencv.hpp>
 
@@ -6,8 +9,8 @@ using namespace std;
 
 int main() {
 
-    const int rows = 500;
-    const int cols = 500;
+    const int rows = 500; /** number of rows in picture */
+    const int cols = 500; /** number of colums in picture */
 
     cv::Mat matrix(rows, cols, CV_8UC3);
 
@@ -25,4 +28,9 @@ int main() {
     cv::waitKey();
 
     return 0;
+}
+
+float calculateNextTempOfTile(float tiles[]) {
+
+    return tiles[0];
 }
