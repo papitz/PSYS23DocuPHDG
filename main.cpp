@@ -23,16 +23,22 @@ bool zeroOrRim(int value, int dimensions) {
     return value <= 0 || value >= dimensions;
 }
 
-void calculateHeatMatrix(float **heatMatrix, float **updatedHeatMatrix,
+bool calculateHeatMatrix(float **heatMatrix, float **updatedHeatMatrix,
                          int rows, int cols) {
+    bool converged = true;
     for (int x = 0; x < rows; x++) {
         for (int y = 0; y < cols; y++) {
             float up = zeroOrRim(y + 1, cols) ? 0.0 : heatMatrix[x][y + 1];
             float left = zeroOrRim(x - 1, rows) ? 0.0 : heatMatrix[x - 1][y];
             float right = zeroOrRim(x + 1, rows) ? 0.0 : heatMatrix[x + 1][y];
             float down = zeroOrRim(y - 1, cols) ? 0.0 : heatMatrix[x][y - 1];
-            updatedHeatMatrix[x][y] = calculateNextTempOfTile(
-                heatMatrix[x][y], up, left, right, down);
+            float oldTile = heatMatrix[x][y];
+            float newTile =
+                calculateNextTempOfTile(oldTile, up, left, right, down);
+
+            updatedHeatMatrix[x][y] = newTile;
+
+            converged = checkForConversion(converged, newTile, oldTile);
         }
     }
     // Update the heat matrix
@@ -42,6 +48,14 @@ void calculateHeatMatrix(float **heatMatrix, float **updatedHeatMatrix,
             heatMatrix[i][j] = updatedHeatMatrix[i][j];
         }
     }
+    return converged;
+}
+
+bool checkForConversion(bool converged, float newTile, float oldTile) {
+    if (converged && (newTile - oldTile < -0.1 || newTile - oldTile > 0.1)) {
+        converged = false;
+    }
+    return converged;
 }
 
 void setColorForTemperature(float temperature, cv::Vec3b &pixel) {
@@ -85,23 +99,26 @@ int main() {
         }
     }
 
-    heatMatrix[50][50] = 10000.0;
+    heatMatrix[50][50] = 15000.0;
 
     float **tmpHeatMatrix = new float *[rows];
     for (int i = 0; i < rows; i++) {
         tmpHeatMatrix[i] = new float[cols];
     }
 
-    for (int i = 0; i < 300; i++) {
-        calculateHeatMatrix(heatMatrix, tmpHeatMatrix, rows, cols);
+    for (int i = 0; i < 50000; i++) {
+        if (calculateHeatMatrix(heatMatrix, tmpHeatMatrix, rows, cols)) {
+            printf("Converged after %d iterations\n", i);
+            break;
+        }
     }
 
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            printf("%.2f ", tmpHeatMatrix[i][j]);
-        }
-        printf("\n");
-    }
+    // for (int i = 0; i < rows; i++) {
+    //     for (int j = 0; j < cols; j++) {
+    //         //printf("%.2f ", tmpHeatMatrix[i][j]);
+    //     }
+    //     printf("\n");
+    // }
 
     cv::Mat matrix(rows, cols, CV_8UC3);
 
