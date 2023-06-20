@@ -1,0 +1,9 @@
+image: debian:bullseye
+build:
+    stage: build
+    tags: [Linux]
+    before_script:
+        - apt-get update && apt-get install -y make gcc cmake gpp
+    script:
+        - cmake .
+        - make
