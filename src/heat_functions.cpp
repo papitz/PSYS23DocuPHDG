@@ -6,6 +6,10 @@ using namespace cv;
 using namespace std;
 
 namespace heatFunctions {
+
+using namespace cv;
+using namespace std;
+
 float calculateNextTempOfTile(float tile, float up, float left, float right,
                               float down) {
     const float HEAT_TRANSFER_CONST = 0.025;
@@ -23,6 +27,7 @@ bool zeroOrRim(int value, int dimensions) {
 bool calculateHeatMatrix(float **heatMatrix, float **updatedHeatMatrix,
                          int rows, int cols) {
     bool converged = true;
+
     for (int x = 0; x < rows; x++) {
         for (int y = 0; y < cols; y++) {
             float up = zeroOrRim(y + 1, cols) ? 0.0 : heatMatrix[x][y + 1];
@@ -35,7 +40,7 @@ bool calculateHeatMatrix(float **heatMatrix, float **updatedHeatMatrix,
 
             updatedHeatMatrix[x][y] = newTile;
 
-            converged = heatFunctions::checkForConversion(converged, newTile, oldTile);
+            converged = checkForConversion(converged, newTile, oldTile);
         }
     }
     // Update the heat matrix
