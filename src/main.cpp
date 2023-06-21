@@ -3,6 +3,9 @@
 #include <opencv2/opencv.hpp>
 #include <opencv2/videoio.hpp>
 #include <stdio.h>
+#include <omp.h>
+
+#define THREAD_NUM 20
 
 using namespace cv;
 using namespace std;
@@ -15,7 +18,9 @@ using namespace std;
 int main() {
     const int rows = 100;
     const int cols = 100;
-    const int numberOfSteps = 100;
+    const int numberOfSteps = 10000;
+
+    omp_set_num_threads(THREAD_NUM);
 
     float ***storedMatrices = new float **[numberOfSteps];
 
@@ -36,12 +41,12 @@ int main() {
 
     cv::VideoWriter videoWriter;
     videoWriter.open("stored_matrices.avi", cv::VideoWriter::fourcc('M', 'J', 'P', 'G'),10, cv::Size(cols, rows));
+    int convergedAfterSteps = numberOfSteps;
+    bool converged = false;
 
     for (int i = 0; i < numberOfSteps; i++) {
-        if (calculateHeatMatrix(heatMatrix, tmpHeatMatrix, rows, cols)) {
-            printf("Converged after %d iterations\n", i);
-            break;
-        }
+        
+        converged = calculateHeatMatrix(heatMatrix, tmpHeatMatrix, rows, cols);
         // Create a new matrix for this iteration
         float **newMatrix = new float *[rows];
         for (int j = 0; j < rows; j++) {
@@ -64,6 +69,11 @@ int main() {
         }
 
         videoWriter.write(matrix);
+        if (converged) {
+            printf("Converged after %d iterations\n", i);
+            convergedAfterSteps = i;
+            break;
+        }
     }
 
     videoWriter.release();
@@ -81,7 +91,7 @@ int main() {
     delete[] tmpHeatMatrix;
 
     // Deallocate the memory for storedMatrices
-    for (int i = 0; i < numberOfSteps; i++) {
+    for (int i = 0; i < convergedAfterSteps; i++) {
         for (int j = 0; j < rows; j++) {
             delete[] storedMatrices[i][j];
         }

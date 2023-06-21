@@ -1,6 +1,7 @@
+#include "../include/heat_functions.hpp"
+#include <omp.h>
 #include <opencv2/opencv.hpp>
 #include <stdio.h>
-#include "../include/heat_functions.hpp"
 
 using namespace cv;
 using namespace std;
@@ -28,19 +29,28 @@ bool calculateHeatMatrix(float **heatMatrix, float **updatedHeatMatrix,
                          int rows, int cols) {
     bool converged = true;
 
-    for (int x = 0; x < rows; x++) {
-        for (int y = 0; y < cols; y++) {
-            float up = zeroOrRim(y + 1, cols) ? 0.0 : heatMatrix[x][y + 1];
-            float left = zeroOrRim(x - 1, rows) ? 0.0 : heatMatrix[x - 1][y];
-            float right = zeroOrRim(x + 1, rows) ? 0.0 : heatMatrix[x + 1][y];
-            float down = zeroOrRim(y - 1, cols) ? 0.0 : heatMatrix[x][y - 1];
-            float oldTile = heatMatrix[x][y];
-            float newTile =
-                calculateNextTempOfTile(oldTile, up, left, right, down);
+#pragma omp parallel
+    {
+#pragma omp for collapse(2)
+        for (int x = 0; x < rows; x++) {
+            for (int y = 0; y < cols; y++) {
+                float up = zeroOrRim(y + 1, cols) ? 0.0 : heatMatrix[x][y + 1];
+                float left =
+                    zeroOrRim(x - 1, rows) ? 0.0 : heatMatrix[x - 1][y];
+                float right =
+                    zeroOrRim(x + 1, rows) ? 0.0 : heatMatrix[x + 1][y];
+                float down =
+                    zeroOrRim(y - 1, cols) ? 0.0 : heatMatrix[x][y - 1];
+                float oldTile = heatMatrix[x][y];
+                float newTile =
+                    calculateNextTempOfTile(oldTile, up, left, right, down);
 
-            updatedHeatMatrix[x][y] = newTile;
+                updatedHeatMatrix[x][y] = newTile;
 
-            converged = checkForConversion(converged, newTile, oldTile);
+                /* TODO: This is slow for some reason. Make a better conversion check*/
+#pragma omp critical
+                { converged = checkForConversion(converged, newTile, oldTile); }
+            }
         }
     }
     // Update the heat matrix
@@ -88,4 +98,4 @@ void setColorForTemperature(float temperature, cv::Vec3b &pixel) {
         pixel[2] = 255;
     }
 }
-}
+} // namespace heatFunctions
