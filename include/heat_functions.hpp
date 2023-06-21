@@ -3,10 +3,14 @@
 
 // Function declarations
 #include <opencv2/core/matx.hpp>
+namespace heatFunctions {
+
 float calculateNextTempOfTile(float tile, float up, float left, float right,
                               float down);
-bool checkForConversion(bool converged, float newTile, float oldTile);
-float **calculateHeatMatrix(float **heatMatrix, int rows, int cols);
+bool calculateHeatMatrix(float **heatMatrix, float **tmpHeatMatrix, int rows,
+                            int cols);
 bool zeroOrRim(int value, int dimensions);
 void setColorForTemperature(float temperature, cv::Vec3b &pixel);
+bool checkForConversion(bool converged, float newTile, float oldTile);
+} // namespace heatFunctions
 #endif // HEAT_FUNCTIONS_H

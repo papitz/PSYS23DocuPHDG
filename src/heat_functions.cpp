@@ -1,14 +1,11 @@
-/**
- * A small test application for OpenCV
- */
-#include "heat_functions.h"
-#include <iostream>
 #include <opencv2/opencv.hpp>
 #include <stdio.h>
+#include "../include/heat_functions.hpp"
 
 using namespace cv;
 using namespace std;
 
+namespace heatFunctions {
 float calculateNextTempOfTile(float tile, float up, float left, float right,
                               float down) {
     const float HEAT_TRANSFER_CONST = 0.025;
@@ -38,7 +35,7 @@ bool calculateHeatMatrix(float **heatMatrix, float **updatedHeatMatrix,
 
             updatedHeatMatrix[x][y] = newTile;
 
-            converged = checkForConversion(converged, newTile, oldTile);
+            converged = heatFunctions::checkForConversion(converged, newTile, oldTile);
         }
     }
     // Update the heat matrix
@@ -86,64 +83,4 @@ void setColorForTemperature(float temperature, cv::Vec3b &pixel) {
         pixel[2] = 255;
     }
 }
-
-int main() {
-    const int rows = 100;
-    const int cols = 100;
-
-    float **heatMatrix = new float *[rows];
-    for (int i = 0; i < rows; i++) {
-        heatMatrix[i] = new float[cols];
-        for (int j = 0; j < cols; j++) {
-            heatMatrix[i][j] = 0.0;
-        }
-    }
-
-    heatMatrix[50][50] = 15000.0;
-
-    float **tmpHeatMatrix = new float *[rows];
-    for (int i = 0; i < rows; i++) {
-        tmpHeatMatrix[i] = new float[cols];
-    }
-
-    for (int i = 0; i < 50000; i++) {
-        if (calculateHeatMatrix(heatMatrix, tmpHeatMatrix, rows, cols)) {
-            printf("Converged after %d iterations\n", i);
-            break;
-        }
-    }
-
-    // for (int i = 0; i < rows; i++) {
-    //     for (int j = 0; j < cols; j++) {
-    //         //printf("%.2f ", tmpHeatMatrix[i][j]);
-    //     }
-    //     printf("\n");
-    // }
-
-    cv::Mat matrix(rows, cols, CV_8UC3);
-
-    for (int i = 0; i < rows; ++i) {
-        for (int j = 0; j < cols; ++j) {
-            cv::Vec3b &pixel = matrix.at<cv::Vec3b>(i, j);
-            setColorForTemperature(heatMatrix[i][j], pixel);
-        }
-    }
-
-    // Display the matrix
-    cv::imshow("Heat Matrix", matrix);
-    cv::waitKey();
-
-    // Deallocate the memory for heatMatrix
-    for (int i = 0; i < rows; i++) {
-        delete[] heatMatrix[i];
-    }
-    delete[] heatMatrix;
-
-    // Deallocate the memory for updatedHeatMatrix
-    for (int i = 0; i < rows; i++) {
-        delete[] tmpHeatMatrix[i];
-    }
-    delete[] tmpHeatMatrix;
-
-    return 0;
 }
