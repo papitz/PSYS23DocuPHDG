@@ -6,10 +6,11 @@
 namespace heatFunctions {
 
 float calculateNextTempOfTile(float tile, float up, float left, float right,
-                              float down);
+                              float down, float heatTransferConstant);
 bool calculateHeatMatrix(float **heatMatrix, float **tmpHeatMatrix, int rows,
-                            int cols);
+                         int cols, float heatTransferConstant,
+                         bool parallelFlag, float convergenceLimit);
 bool zeroOrRim(int value, int dimensions);
 void setColorForTemperature(float temperature, cv::Vec3b &pixel);
 } // namespace heatFunctions
-#endif // HEAT_FUNCTIONS_ 
+#endif // HEAT_FUNCTIONS_

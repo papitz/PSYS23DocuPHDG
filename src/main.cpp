@@ -1,11 +1,12 @@
 #include "../include/heat_functions.hpp"
+#include <chrono>
 #include <iostream>
+#include <omp.h>
 #include <opencv2/opencv.hpp>
 #include <opencv2/videoio.hpp>
 #include <stdio.h>
-#include <omp.h>
-
-#define THREAD_NUM 20
+#include <string>
+using namespace std::chrono;
 
 using namespace cv;
 using namespace std;
@@ -14,15 +15,73 @@ using namespace heatFunctions;
 using namespace cv;
 using namespace std;
 
+// Initialize globally with default values
+int rows = 100;
+int cols = 100;
+int maxNumberOfSteps = 1000;
+float startingHeat = 15000.0;
+float heatTransferConstant = 0.025;
+float convergenceLimit = 0.01;
+bool parallelFlag = false;
 
-int main() {
-    const int rows = 100;
-    const int cols = 100;
-    const int numberOfSteps = 10000;
+/**
+ * @brief set all values from the parameter list.
+ * For now the order is like this: (int) rows, (int) cols, (int) numberOfSteps,
+ * (float) startingHeat, (1=true, 0=false) parallelFlag
+ *
+ *
+ * @param int argc Number of arguments
+ * @param char*[] argv parameter list
+ */
+void setValuesFromParams(int argc, char *argv[]) {
+    // Return if we dont have all arguments
+    if (argc < 8) {
+        printf("Not enough arguments provided. Defaults are used\n");
+        return;
+    }
 
-    omp_set_num_threads(THREAD_NUM);
+    rows = stoi(argv[1]);
+    cols = stoi(argv[2]);
+    maxNumberOfSteps = stoi(argv[3]);
+    startingHeat = stof(argv[4]);
+    heatTransferConstant = stof(argv[5]);
+    convergenceLimit = stof(argv[6]);
+    parallelFlag = (bool)stoi(argv[7]);
 
-    float ***storedMatrices = new float **[numberOfSteps];
+    printf("Successfully set values from command line!\n");
+    printf("Rows: %d\n", rows);
+    printf("Cols: %d\n", cols);
+    printf("maxNumberOfSteps: %d\n", maxNumberOfSteps);
+    printf("startingHeat: %f\n", startingHeat);
+    printf("heatTransferConstant: %f\n", heatTransferConstant);
+    printf("convergenceLimit: %f\n", convergenceLimit);
+    printf("parallelFlag: %d\n", parallelFlag);
+}
+
+void createVideo(float **storedMatrices[], int numberOfSteps) {
+    cv::VideoWriter videoWriter;
+    videoWriter.open("stored_matrices.avi",
+                     cv::VideoWriter::fourcc('M', 'J', 'P', 'G'), 10,
+                     cv::Size(cols, rows));
+
+    for (int i = 0; i < numberOfSteps; i++) {
+        cv::Mat matrix(rows, cols, CV_8UC3);
+        for (int j = 0; j < rows; ++j) {
+            for (int k = 0; k < cols; ++k) {
+                cv::Vec3b &pixel = matrix.at<cv::Vec3b>(i, j);
+                setColorForTemperature(storedMatrices[i][j][k], pixel);
+            }
+        }
+        videoWriter.write(matrix);
+    }
+
+    videoWriter.release();
+}
+
+int main(int argc, char *argv[]) {
+    setValuesFromParams(argc, argv);
+
+    /* float ***storedMatrices = new float **[maxNumberOfSteps]; */
 
     float **heatMatrix = new float *[rows];
     for (int i = 0; i < rows; i++) {
@@ -32,43 +91,41 @@ int main() {
         }
     }
 
-    heatMatrix[rows/2][cols/2] = 15000.0;
+    heatMatrix[rows / 2][cols / 2] = startingHeat;
 
     float **tmpHeatMatrix = new float *[rows];
     for (int i = 0; i < rows; i++) {
         tmpHeatMatrix[i] = new float[cols];
     }
 
-    cv::VideoWriter videoWriter;
-    videoWriter.open("stored_matrices.avi", cv::VideoWriter::fourcc('M', 'J', 'P', 'G'),10, cv::Size(cols, rows));
-    int convergedAfterSteps = numberOfSteps;
+    int convergedAfterSteps = maxNumberOfSteps;
     bool converged = false;
 
-    for (int i = 0; i < numberOfSteps; i++) {
-        
-        converged = calculateHeatMatrix(heatMatrix, tmpHeatMatrix, rows, cols);
-        // Create a new matrix for this iteration
-        float **newMatrix = new float *[rows];
-        for (int j = 0; j < rows; j++) {
-            newMatrix[j] = new float[cols];
-            for (int k = 0; k < cols; k++) {
-                newMatrix[j][k] = heatMatrix[j][k];
-            }
+    auto stop = high_resolution_clock::now();
+    auto start = high_resolution_clock::now();
+
+    for (int i = 0; i < maxNumberOfSteps; i++) {
+        if (i % 25 == 0) {
+            printf("Step %d\n", i);
         }
+
+        converged = calculateHeatMatrix(heatMatrix, tmpHeatMatrix, rows, cols,
+                                        heatTransferConstant, parallelFlag,
+                                        convergenceLimit);
+        // Create a new matrix for this iteration
+        /* float **newMatrix = new float *[rows]; */
+        /* for (int j = 0; j < rows; j++) { */
+        /*     newMatrix[j] = new float[cols]; */
+        /*     for (int k = 0; k < cols; k++) { */
+        /*         newMatrix[j][k] = heatMatrix[j][k]; */
+        /*     } */
+        /* } */
+
+        stop = high_resolution_clock::now();
 
         // Store the new matrix in storedMatrices
-        storedMatrices[i] = newMatrix;
+        /* storedMatrices[i] = newMatrix; */
 
-        cv::Mat matrix(rows, cols, CV_8UC3);
-
-        for (int i = 0; i < rows; ++i) {
-            for (int j = 0; j < cols; ++j) {
-                cv::Vec3b &pixel = matrix.at<cv::Vec3b>(i, j);
-                setColorForTemperature(heatMatrix[i][j], pixel);
-            }
-        }
-
-        videoWriter.write(matrix);
         if (converged) {
             printf("Converged after %d iterations\n", i);
             convergedAfterSteps = i;
@@ -76,7 +133,10 @@ int main() {
         }
     }
 
-    videoWriter.release();
+    auto duration = duration_cast<milliseconds>(stop - start);
+    printf("Took %li ms\n", duration.count());
+
+    /* createVideo(storedMatrices, convergedAfterSteps); */
 
     // Deallocate the memory for heatMatrix
     for (int i = 0; i < rows; i++) {
@@ -91,13 +151,13 @@ int main() {
     delete[] tmpHeatMatrix;
 
     // Deallocate the memory for storedMatrices
-    for (int i = 0; i < convergedAfterSteps; i++) {
-        for (int j = 0; j < rows; j++) {
-            delete[] storedMatrices[i][j];
-        }
-        delete[] storedMatrices[i];
-    }
-    delete[] storedMatrices;
+    /* for (int i = 0; i < convergedAfterSteps; i++) { */
+    /*     for (int j = 0; j < rows; j++) { */
+    /*         delete[] storedMatrices[i][j]; */
+    /*     } */
+    /*     delete[] storedMatrices[i]; */
+    /* } */
+    /* delete[] storedMatrices; */
 
     return 0;
 }

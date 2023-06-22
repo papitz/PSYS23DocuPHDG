@@ -1,23 +1,23 @@
 #include "../include/heat_functions.hpp"
+#include <chrono>
 #include <omp.h>
 #include <opencv2/opencv.hpp>
 #include <stdio.h>
 
 using namespace cv;
 using namespace std;
+using namespace std::chrono;
 
 namespace heatFunctions {
 
-const float CONVERGENCE_LIMIT = 0.1;
 using namespace cv;
 using namespace std;
 
 float calculateNextTempOfTile(float tile, float up, float left, float right,
-                              float down) {
-    const float HEAT_TRANSFER_CONST = 0.025;
+                              float down, float heatTransferConstant) {
 
-    float newTile = tile + HEAT_TRANSFER_CONST * (right + left - 2 * tile) +
-                    HEAT_TRANSFER_CONST * (up + down - 2 * tile);
+    float newTile = tile + heatTransferConstant * (right + left - 2 * tile) +
+                    heatTransferConstant * (up + down - 2 * tile);
 
     return newTile;
 }
@@ -27,9 +27,11 @@ bool zeroOrRim(int value, int dimensions) {
 }
 
 bool calculateHeatMatrix(float **heatMatrix, float **updatedHeatMatrix,
-                         int rows, int cols) {
+                         int rows, int cols, float heatTransferConstant,
+                         bool parallelFlag, float convergenceLimit) {
 
-#pragma omp parallel
+    /* auto start = high_resolution_clock::now(); */
+#pragma omp parallel if (parallelFlag)
     {
 #pragma omp for collapse(2)
         for (int x = 0; x < rows; x++) {
@@ -42,23 +44,26 @@ bool calculateHeatMatrix(float **heatMatrix, float **updatedHeatMatrix,
                 float down =
                     zeroOrRim(y - 1, cols) ? 0.0 : heatMatrix[x][y - 1];
                 float oldTile = heatMatrix[x][y];
-                float newTile =
-                    calculateNextTempOfTile(oldTile, up, left, right, down);
+                float newTile = calculateNextTempOfTile(
+                    oldTile, up, left, right, down, heatTransferConstant);
 
                 updatedHeatMatrix[x][y] = newTile;
             }
         }
     }
     bool converged = true;
+    /* auto stop = high_resolution_clock::now(); */
+    /* auto duration = duration_cast<milliseconds>(stop - start); */
+    /* printf("Took %li ms\n", duration.count()); */
 
     // Update the heat matrix
     for (int i = 0; i < rows; i++) {
         /* heatMatrix[i] = new float[cols]; */
         for (int j = 0; j < cols; j++) {
             if (converged && (heatMatrix[i][j] - updatedHeatMatrix[i][j] <
-                                  -CONVERGENCE_LIMIT ||
+                                  -convergenceLimit ||
                               heatMatrix[i][j] - updatedHeatMatrix[i][j] >
-                                  CONVERGENCE_LIMIT)) {
+                                  convergenceLimit)) {
                 converged = false;
             }
             heatMatrix[i][j] = updatedHeatMatrix[i][j];
