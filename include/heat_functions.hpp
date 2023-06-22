@@ -11,6 +11,5 @@ bool calculateHeatMatrix(float **heatMatrix, float **tmpHeatMatrix, int rows,
                             int cols);
 bool zeroOrRim(int value, int dimensions);
 void setColorForTemperature(float temperature, cv::Vec3b &pixel);
-bool checkForConversion(bool converged, float newTile, float oldTile);
 } // namespace heatFunctions
-#endif // HEAT_FUNCTIONS_H
+#endif // HEAT_FUNCTIONS_ 

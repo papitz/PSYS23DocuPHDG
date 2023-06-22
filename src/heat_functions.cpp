@@ -8,6 +8,7 @@ using namespace std;
 
 namespace heatFunctions {
 
+const float CONVERGENCE_LIMIT = 0.1;
 using namespace cv;
 using namespace std;
 
@@ -27,7 +28,6 @@ bool zeroOrRim(int value, int dimensions) {
 
 bool calculateHeatMatrix(float **heatMatrix, float **updatedHeatMatrix,
                          int rows, int cols) {
-    bool converged = true;
 
 #pragma omp parallel
     {
@@ -46,27 +46,25 @@ bool calculateHeatMatrix(float **heatMatrix, float **updatedHeatMatrix,
                     calculateNextTempOfTile(oldTile, up, left, right, down);
 
                 updatedHeatMatrix[x][y] = newTile;
-
-                /* TODO: This is slow for some reason. Make a better conversion check*/
-#pragma omp critical
-                { converged = checkForConversion(converged, newTile, oldTile); }
             }
         }
     }
+    bool converged = true;
+
     // Update the heat matrix
     for (int i = 0; i < rows; i++) {
-        heatMatrix[i] = new float[cols];
+        /* heatMatrix[i] = new float[cols]; */
         for (int j = 0; j < cols; j++) {
+            if (converged && (heatMatrix[i][j] - updatedHeatMatrix[i][j] <
+                                  -CONVERGENCE_LIMIT ||
+                              heatMatrix[i][j] - updatedHeatMatrix[i][j] >
+                                  CONVERGENCE_LIMIT)) {
+                converged = false;
+            }
             heatMatrix[i][j] = updatedHeatMatrix[i][j];
         }
     }
-    return converged;
-}
 
-bool checkForConversion(bool converged, float newTile, float oldTile) {
-    if (converged && (newTile - oldTile < -0.1 || newTile - oldTile > 0.1)) {
-        converged = false;
-    }
     return converged;
 }
 
