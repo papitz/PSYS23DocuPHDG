@@ -23,6 +23,7 @@ float startingHeat = 15000.0;
 float heatTransferConstant = 0.025;
 float convergenceLimit = 0.01;
 bool parallelFlag = false;
+int numberOfThreads = 20;
 
 /**
  * @brief set all values from the parameter list.
@@ -35,7 +36,7 @@ bool parallelFlag = false;
  */
 void setValuesFromParams(int argc, char *argv[]) {
     // Return if we dont have all arguments
-    if (argc < 8) {
+    if (argc < 9) {
         printf("Not enough arguments provided. Defaults are used\n");
         return;
     }
@@ -47,6 +48,7 @@ void setValuesFromParams(int argc, char *argv[]) {
     heatTransferConstant = stof(argv[5]);
     convergenceLimit = stof(argv[6]);
     parallelFlag = (bool)stoi(argv[7]);
+    numberOfThreads = stoi(argv[8]);
 
     printf("Successfully set values from command line!\n");
     printf("Rows: %d\n", rows);
@@ -56,6 +58,7 @@ void setValuesFromParams(int argc, char *argv[]) {
     printf("heatTransferConstant: %f\n", heatTransferConstant);
     printf("convergenceLimit: %f\n", convergenceLimit);
     printf("parallelFlag: %d\n", parallelFlag);
+    printf("numberOfThreads: %d\n", numberOfThreads);
 }
 
 void createVideo(float **storedMatrices[], int numberOfSteps) {
@@ -80,6 +83,7 @@ void createVideo(float **storedMatrices[], int numberOfSteps) {
 
 int main(int argc, char *argv[]) {
     setValuesFromParams(argc, argv);
+    omp_set_num_threads(numberOfThreads);
 
     /* float ***storedMatrices = new float **[maxNumberOfSteps]; */
 

@@ -51,26 +51,32 @@ bool calculateHeatMatrix(float **heatMatrix, float **updatedHeatMatrix,
             }
         }
     }
-    bool converged = true;
+
+    /* TODO: Convergence check with reduction*/
+    float** tmpPointer = heatMatrix;
+    heatMatrix = updatedHeatMatrix;
+    updatedHeatMatrix = tmpPointer;
+    /* bool converged = true; */
     /* auto stop = high_resolution_clock::now(); */
     /* auto duration = duration_cast<milliseconds>(stop - start); */
     /* printf("Took %li ms\n", duration.count()); */
 
     // Update the heat matrix
-    for (int i = 0; i < rows; i++) {
-        /* heatMatrix[i] = new float[cols]; */
-        for (int j = 0; j < cols; j++) {
-            if (converged && (heatMatrix[i][j] - updatedHeatMatrix[i][j] <
-                                  -convergenceLimit ||
-                              heatMatrix[i][j] - updatedHeatMatrix[i][j] >
-                                  convergenceLimit)) {
-                converged = false;
-            }
-            heatMatrix[i][j] = updatedHeatMatrix[i][j];
-        }
-    }
+    /* for (int i = 0; i < rows; i++) { */
+    /*     /* heatMatrix[i] = new float[cols]; */
+    /*     for (int j = 0; j < cols; j++) { */
+    /*         if (converged && (heatMatrix[i][j] - updatedHeatMatrix[i][j] < */
+    /*                               -convergenceLimit || */
+    /*                           heatMatrix[i][j] - updatedHeatMatrix[i][j] > */
+    /*                               convergenceLimit)) { */
+    /*             converged = false; */
+    /*         } */
+    /*         heatMatrix[i][j] = updatedHeatMatrix[i][j]; */
+    /*     } */
+    /* } */
 
-    return converged;
+    /* return converged; */
+    return false;
 }
 
 void setColorForTemperature(float temperature, cv::Vec3b &pixel) {
