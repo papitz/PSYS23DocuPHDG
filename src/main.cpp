@@ -27,8 +27,9 @@ int numberOfThreads = 20;
 
 /**
  * @brief set all values from the parameter list.
- * For now the order is like this: (int) rows, (int) cols, (int) numberOfSteps,
- * (float) startingHeat, (1=true, 0=false) parallelFlag
+ * For now the order is like this: ROWS(int) COLS(int) NUMBER_OF_STEPS(int)
+ * STARTING_HEAT(float) HEAT_TRANSFER_CONSTANT(float) CONVERGENCE_LIMIT(float)
+ * PARALLEL_FLAG(0 or 1) NUMBER_OF_THREADS(int)
  *
  *
  * @param int argc Number of arguments
