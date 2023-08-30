@@ -1,4 +1,5 @@
 #include "../include/heat_functions.hpp"
+#include "../include/HeatMatrix.hpp"
 #include <chrono>
 #include <iostream>
 #include <omp.h>
