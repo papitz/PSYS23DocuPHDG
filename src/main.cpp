@@ -89,24 +89,15 @@ int main(int argc, char *argv[]) {
 
     /* float ***storedMatrices = new float **[maxNumberOfSteps]; */
 
-    float **heatMatrix = new float *[rows];
-    for (int i = 0; i < rows; i++) {
-        heatMatrix[i] = new float[cols];
-        for (int j = 0; j < cols; j++) {
-            heatMatrix[i][j] = 0.0;
-        }
-    }
+    HeatMatrix heatMatrix = HeatMatrix(rows, cols);
+    
+    heatMatrix.setTempAt(rows / 2, cols / 2 , startingHeat);
 
-    heatMatrix[rows / 2][cols / 2] = startingHeat;
-
-    float **tmpHeatMatrix = new float *[rows];
-    for (int i = 0; i < rows; i++) {
-        tmpHeatMatrix[i] = new float[cols];
-    }
+    HeatMatrix tmpHeatMatrix = HeatMatrix(rows, cols);
 
     int convergedAfterSteps = maxNumberOfSteps;
     bool converged = false;
-
+    
     auto stop = high_resolution_clock::now();
     auto start = high_resolution_clock::now();
 
@@ -118,14 +109,6 @@ int main(int argc, char *argv[]) {
         converged = calculateHeatMatrix(heatMatrix, tmpHeatMatrix, rows, cols,
                                         heatTransferConstant, parallelFlag,
                                         convergenceLimit);
-        // Create a new matrix for this iteration
-        /* float **newMatrix = new float *[rows]; */
-        /* for (int j = 0; j < rows; j++) { */
-        /*     newMatrix[j] = new float[cols]; */
-        /*     for (int k = 0; k < cols; k++) { */
-        /*         newMatrix[j][k] = heatMatrix[j][k]; */
-        /*     } */
-        /* } */
 
         stop = high_resolution_clock::now();
 
@@ -141,29 +124,9 @@ int main(int argc, char *argv[]) {
 
     auto duration = duration_cast<milliseconds>(stop - start);
     printf("Took %li ms\n", duration.count());
+    heatMatrix.printMatrix();
 
     /* createVideo(storedMatrices, convergedAfterSteps); */
-
-    // Deallocate the memory for heatMatrix
-    for (int i = 0; i < rows; i++) {
-        delete[] heatMatrix[i];
-    }
-    delete[] heatMatrix;
-
-    // Deallocate the memory for updatedHeatMatrix
-    for (int i = 0; i < rows; i++) {
-        delete[] tmpHeatMatrix[i];
-    }
-    delete[] tmpHeatMatrix;
-
-    // Deallocate the memory for storedMatrices
-    /* for (int i = 0; i < convergedAfterSteps; i++) { */
-    /*     for (int j = 0; j < rows; j++) { */
-    /*         delete[] storedMatrices[i][j]; */
-    /*     } */
-    /*     delete[] storedMatrices[i]; */
-    /* } */
-    /* delete[] storedMatrices; */
 
     return 0;
 }

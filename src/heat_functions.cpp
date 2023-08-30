@@ -1,5 +1,6 @@
 #include "../include/heat_functions.hpp"
 #include <chrono>
+#include <cmath>
 #include <omp.h>
 #include <opencv2/opencv.hpp>
 #include <stdio.h>
@@ -23,7 +24,7 @@ float calculateNextTempOfTile(float tile, float up, float left, float right,
 }
 
 bool zeroOrRim(int value, int dimensions) {
-    return value <= 0 || value >= dimensions;
+    return value <= 0 || value >= dimensions - 1;
 }
 
 bool calculateHeatMatrix(float **heatMatrix, float **updatedHeatMatrix,
@@ -78,6 +79,65 @@ bool calculateHeatMatrix(float **heatMatrix, float **updatedHeatMatrix,
     /* return converged; */
     return false;
 }
+
+bool calculateHeatMatrix(HeatMatrix &heatMatrix, HeatMatrix &tmpHeatMatrix,
+                         int rows, int cols, float heatTransferConstant,
+                         bool parallelFlag, float convergenceLimit) {
+
+    /* auto start = high_resolution_clock::now(); */
+#pragma omp parallel if (parallelFlag)
+    {
+#pragma omp for collapse(2)
+        for (int x = 0; x < rows; x++) {
+            for (int y = 0; y < cols; y++) {
+                float up = zeroOrRim(y + 1, cols) ? 0.0 : heatMatrix[x][y + 1];
+                float left =
+                    zeroOrRim(x - 1, rows) ? 0.0 : heatMatrix[x - 1][y];
+                float right =
+                    zeroOrRim(x + 1, rows) ? 0.0 : heatMatrix[x + 1][y];
+                float down =
+                    zeroOrRim(y - 1, cols) ? 0.0 : heatMatrix[x][y - 1];
+                float oldTile = heatMatrix[x][y];
+                float newTile = calculateNextTempOfTile(
+                    oldTile, up, left, right, down, heatTransferConstant);
+
+                tmpHeatMatrix[x][y] = newTile;
+            }
+        }
+    }
+
+    heatMatrix.swap(tmpHeatMatrix);
+    /* TODO: Convergence check with reduction*/
+
+    /* HeatMatrix tmpPointer = heatMatrix; */
+    /* heatMatrix = updatedHeatMatrix; */
+    /* updatedHeatMatrix = tmpPointer; */
+    /* bool converged = true; */
+    /* auto stop = high_resolution_clock::now(); */
+    /* auto duration = duration_cast<milliseconds>(stop - start); */
+    /* printf("Took %li ms\n", duration.count()); */
+
+    // Update the heat matrix
+    /* for (int i = 0; i < rows; i++) { */
+    /*     /* heatMatrix[i] = new float[cols]; */
+    /*     for (int j = 0; j < cols; j++) { */
+    /*         if (converged && (heatMatrix[i][j] - updatedHeatMatrix[i][j] < */
+    /*                               -convergenceLimit || */
+    /*                           heatMatrix[i][j] - updatedHeatMatrix[i][j] > */
+    /*                               convergenceLimit)) { */
+    /*             converged = false; */
+    /*         } */
+    /*         heatMatrix[i][j] = updatedHeatMatrix[i][j]; */
+    /*     } */
+    /* } */
+
+    return heatMatrix.checkForConversion(tmpHeatMatrix, convergenceLimit, parallelFlag);
+    /* return false; */
+}
+
+/* bool checkForConvergence(float convergenceLimit, HeatMatrix oldMatrix, HeatMatrix newMatrix){  */
+/*      */
+/* } */
 
 void setColorForTemperature(float temperature, cv::Vec3b &pixel) {
     switch ((int)(temperature / 75)) {
