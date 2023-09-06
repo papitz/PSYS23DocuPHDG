@@ -51,6 +51,11 @@ void HeatMatrix::printMatrix() const {
     }
 }
 
+/**
+ * @brief accumulate all temperatures of the matrix
+ *
+ * @return sum of all temps
+ */
 float HeatMatrix::accumulateAllTemps() const {
     float totalSum = std::accumulate(
         matrix.begin(), matrix.end(), 0.0,
@@ -60,6 +65,16 @@ float HeatMatrix::accumulateAllTemps() const {
     return totalSum;
 }
 
+/**
+ * @brief Check if the HeatMatrix converged or not
+ *
+ * @param[in] other HeatMatrix to check conversion agains
+ * @param[in] convergenceLimit Max delta the temperature can have to be
+ * considered converged
+ * @param[in] parallelFlag Flag to set if the convergence check is done in
+ * parallel or not
+ * @return Boolean if the HeatMatrix converged or not
+ */
 bool HeatMatrix::checkForConversion(HeatMatrix other, float convergenceLimit,
                                     bool parallelFlag) {
     bool converged = true;
@@ -77,15 +92,25 @@ bool HeatMatrix::checkForConversion(HeatMatrix other, float convergenceLimit,
     return converged;
 }
 
-// Subscript operator implementation for reading elements
+/**
+ * @brief Subscript operator implementation for reading elements
+ *
+ */
 const std::vector<float> &HeatMatrix::operator[](int index) const {
     return matrix[index];
 }
 
-// Subscript operator implementation for modifying elements
+/**
+ * @brief Subscript operator implementation for modifying elements
+ *
+ */
 std::vector<float> &HeatMatrix::operator[](int index) { return matrix[index]; }
 
-// Custom swap function implementation
+/**
+ * @brief Custom swap function implementation
+ *
+ * @param[in,out] other HeatMatrix to swap values with
+ */
 void HeatMatrix::swap(HeatMatrix &other) {
     if (matrixRows != other.matrixRows || matrixCols != other.matrixCols) {
         throw std::invalid_argument("Matrices need to be of same size");
