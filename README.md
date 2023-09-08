@@ -4,6 +4,10 @@ Repo zur Belegarbeit im Fach Parallel Systems im SoSe 2023
 
 ## Documentation
 
+Documentation can be viewed [here](https://papitz.github.io/PSYS23DocuPHDG/).
+To generate it you need to push to github since it is hosted as a github page.
+Any push to any Github branch will genereate the Documentation.
+
 ## Build
 
 This project is built with cmake and make.
