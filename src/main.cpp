@@ -33,8 +33,8 @@ int numberOfThreads = 20;
  * PARALLEL_FLAG(0 or 1) NUMBER_OF_THREADS(int)
  *
  *
- * @param int argc Number of arguments
- * @param char*[] argv parameter list
+ * @param argc Number of arguments
+ * @param argv parameter list
  */
 void setValuesFromParams(int argc, char *argv[]) {
     // Return if we dont have all arguments

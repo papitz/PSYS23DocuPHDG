@@ -10,7 +10,8 @@
  * @brief Constructor for HeatMatrix. Initializes a matrix that has number of
  * rows and cols as specified in size
  *
- * @param size Number of rows and cols in the matrix
+ * @param[in] rows Rows of the matrix
+ * @param[in] cols Columns of the matrix
  */
 HeatMatrix::HeatMatrix(int rows, int cols)
     : matrix(rows, std::vector<float>(cols, 0.0)), matrixRows(rows),

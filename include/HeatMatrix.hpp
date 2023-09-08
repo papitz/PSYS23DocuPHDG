@@ -2,16 +2,15 @@
 #define HEATMATRIX_H
 
 #include <vector>
-/* #include <algorithm> */
 
+/**
+ * @brief class that keeps all data to a heat matrix
+ */
 class HeatMatrix {
 public:
     HeatMatrix(int rows, int cols);
     HeatMatrix(HeatMatrix &&) = default;
     HeatMatrix(const HeatMatrix &) = default;
-    /* HeatMatrix &operator=(HeatMatrix &&) = default; */
-    /* HeatMatrix &operator=(const HeatMatrix &) = default; */
-    /* ~HeatMatrix(); */
     void printMatrix() const;
     void setTempAt(int x, int y, float targetTemp);
     float accumulateAllTemps() const;
@@ -27,8 +26,17 @@ public:
 
 
 private:
+    /**
+     * @matrixRows Number of rows in the matrix
+     */
     const int matrixRows;
+    /**
+     * @matrixCols Number of columns in the matrix
+     */
     const int matrixCols;
+    /**
+     * @matrix Actual data matrix. Represented as a 2d vector
+     */
     std::vector<std::vector<float>> matrix;
 };
 

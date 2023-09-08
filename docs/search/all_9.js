@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['numberofthreads_0',['numberOfThreads',['../main_8cpp.html#a4c424ffe8d422feafac4036f5bfe3ea4',1,'main.cpp']]]
+  ['operator_5b_5d_0',['operator[]',['../classHeatMatrix.html#a44aaa55292aad2dbbd889726fa23c600',1,'HeatMatrix::operator[](int index) const'],['../classHeatMatrix.html#a1d4f97bc28dc6d7a1d8c8355c7649f4a',1,'HeatMatrix::operator[](int index)']]]
 ];

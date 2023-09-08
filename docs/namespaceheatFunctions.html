@@ -80,9 +80,8 @@ Functions</h2></td></tr>
 <tr class="memitem:a5801ec52d8e5a2c301d6109201eaf6ae" id="r_a5801ec52d8e5a2c301d6109201eaf6ae"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceheatFunctions.html#a5801ec52d8e5a2c301d6109201eaf6ae">calculateNextTempOfTile</a> (float tile, float up, float left, float right, float down, float <a class="el" href="main_8cpp.html#a953b97d7cefe0726d26a2fd5fc532bbe">heatTransferConstant</a>)</td></tr>
 <tr class="memdesc:a5801ec52d8e5a2c301d6109201eaf6ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate the temperature of the tile based on its neighbors  <br /></td></tr>
 <tr class="separator:a5801ec52d8e5a2c301d6109201eaf6ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1df3e95c5d5b653dd95f0d16ff29b153" id="r_a1df3e95c5d5b653dd95f0d16ff29b153"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceheatFunctions.html#a1df3e95c5d5b653dd95f0d16ff29b153">calculateHeatMatrix</a> (float **heatMatrix, float **updatedHeatMatrix, int <a class="el" href="main_8cpp.html#a061459acc9e078fa4699e0e349887215">rows</a>, int <a class="el" href="main_8cpp.html#a4407a60bc4387adae24cee658711f2d9">cols</a>, float <a class="el" href="main_8cpp.html#a953b97d7cefe0726d26a2fd5fc532bbe">heatTransferConstant</a>, bool <a class="el" href="main_8cpp.html#ac13bec001fd57f5b43cfd46aa7e8bf27">parallelFlag</a>, float <a class="el" href="main_8cpp.html#ab874ade08e445c96db60621bf1e7714e">convergenceLimit</a>)</td></tr>
-<tr class="memdesc:a1df3e95c5d5b653dd95f0d16ff29b153"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate the next step of the heatMatrix  <br /></td></tr>
-<tr class="separator:a1df3e95c5d5b653dd95f0d16ff29b153"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add20c105c31e0134ad793efaf6bdd963" id="r_add20c105c31e0134ad793efaf6bdd963"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceheatFunctions.html#add20c105c31e0134ad793efaf6bdd963">calculateHeatMatrix</a> (float **heatMatrix, float **tmpHeatMatrix, int <a class="el" href="main_8cpp.html#a061459acc9e078fa4699e0e349887215">rows</a>, int <a class="el" href="main_8cpp.html#a4407a60bc4387adae24cee658711f2d9">cols</a>, float <a class="el" href="main_8cpp.html#a953b97d7cefe0726d26a2fd5fc532bbe">heatTransferConstant</a>, bool <a class="el" href="main_8cpp.html#ac13bec001fd57f5b43cfd46aa7e8bf27">parallelFlag</a>, float <a class="el" href="main_8cpp.html#ab874ade08e445c96db60621bf1e7714e">convergenceLimit</a>)</td></tr>
+<tr class="separator:add20c105c31e0134ad793efaf6bdd963"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff9ff1bcef855957cc10b9ac4a5b02d1" id="r_aff9ff1bcef855957cc10b9ac4a5b02d1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceheatFunctions.html#aff9ff1bcef855957cc10b9ac4a5b02d1">calculateHeatMatrix</a> (<a class="el" href="classHeatMatrix.html">HeatMatrix</a> &amp;heatMatrix, <a class="el" href="classHeatMatrix.html">HeatMatrix</a> &amp;tmpHeatMatrix, int <a class="el" href="main_8cpp.html#a061459acc9e078fa4699e0e349887215">rows</a>, int <a class="el" href="main_8cpp.html#a4407a60bc4387adae24cee658711f2d9">cols</a>, float <a class="el" href="main_8cpp.html#a953b97d7cefe0726d26a2fd5fc532bbe">heatTransferConstant</a>, bool <a class="el" href="main_8cpp.html#ac13bec001fd57f5b43cfd46aa7e8bf27">parallelFlag</a>, float <a class="el" href="main_8cpp.html#ab874ade08e445c96db60621bf1e7714e">convergenceLimit</a>)</td></tr>
 <tr class="memdesc:aff9ff1bcef855957cc10b9ac4a5b02d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate the next step of the heatMatrix  <br /></td></tr>
 <tr class="separator:aff9ff1bcef855957cc10b9ac4a5b02d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -94,8 +93,8 @@ Functions</h2></td></tr>
 <tr class="separator:a66a7373e9fca8be178f3acee97620407"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a1df3e95c5d5b653dd95f0d16ff29b153" name="a1df3e95c5d5b653dd95f0d16ff29b153"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1df3e95c5d5b653dd95f0d16ff29b153">&#9670;&#160;</a></span>calculateHeatMatrix() <span class="overload">[1/2]</span></h2>
+<a id="add20c105c31e0134ad793efaf6bdd963" name="add20c105c31e0134ad793efaf6bdd963"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add20c105c31e0134ad793efaf6bdd963">&#9670;&#160;</a></span>calculateHeatMatrix() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -110,7 +109,7 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">float **&#160;</td>
-          <td class="paramname"><em>updatedHeatMatrix</em>, </td>
+          <td class="paramname"><em>tmpHeatMatrix</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -149,22 +148,6 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>calculate the next step of the heatMatrix </p>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000001">Deprecated:</a></b></dt><dd>because this does not use the <a class="el" href="classHeatMatrix.html">HeatMatrix</a> class </dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">heatMatrix</td><td>heatMatrix that goes in </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">updatedHeatMatrix</td><td>second heatMatrix so we can check for Convergence </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">rows</td><td>amount of rows </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">cols</td><td>amount of cols </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">heatTransferConstant</td><td>constant that decides how much heat is transfered </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">parallelFlag</td><td>flag that decides if things are calculated in parallel or not </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">convergenceLimit</td><td>limit at which delta of temp we count the matrix as converged </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>if matrix is converged or not </dd></dl>
 
 </div>
 </div>
@@ -228,7 +211,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">heatMatrix</td><td>heatMatrix that goes in </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">updatedHeatMatrix</td><td>second heatMatrix so we can check for Convergence </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">tmpHeatMatrix</td><td>second heatMatrix so we can check for Convergence </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">rows</td><td>amount of rows </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">cols</td><td>amount of cols </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">heatTransferConstant</td><td>constant that decides how much heat is transfered </td></tr>
@@ -336,8 +319,8 @@ Functions</h2></td></tr>
 <p>calculate a color depending on the temp of a tile </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">[[TODO:direction]]</td><td>temperature [TODO:description] </td></tr>
-    <tr><td class="paramname">[[TODO:direction]]</td><td>pixel [TODO:description] </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">temperature</td><td>Temperature to set the corresponding color to </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pixel</td><td>Pixel that will get set </td></tr>
   </table>
   </dd>
 </dl>
