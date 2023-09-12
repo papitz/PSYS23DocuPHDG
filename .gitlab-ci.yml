@@ -1,12 +1,36 @@
 image: debian:bullseye
 build:
-    stage: build
-    tags: [Linux]
-    before_script:
-        - apt-get update
-        - apt-get install -y build-essential cmake
-        - apt-get install -y libopencv-dev
-    script:
-        - mkdir build
-        - cmake -S . -b build
-        - cmake --build build
+  stage: build
+  tags: [Linux]
+  before_script:
+    - apt-get update
+    - apt-get install -y build-essential cmake
+    - apt-get install -y libopencv-dev
+  script:
+    - mkdir build
+    - cmake -S . -B build
+    - cmake --build build
+
+  artifacts:
+   paths:
+    - HeatMatrix
+    - t_HeatMatrix
+    
+
+ctest:
+  image: gitlab/gitlab-runner-helper:xenial
+  stage: test
+  script:
+    - mkdir build
+    - cmake -S . -B build
+    - cmake --build build
+    - cd build
+    - ctest --output-on-failure
+  tags:
+    - docker
+  artifacts:
+    when: always
+    paths:
+      - build/Testing/Temporary/LastTest.log
+    reports:
+      junit: build/Testing/Temporary/LastTest.log
