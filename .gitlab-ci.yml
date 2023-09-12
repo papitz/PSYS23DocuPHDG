@@ -6,6 +6,7 @@ build:
     - apt-get update
     - apt-get install -y build-essential cmake
     - apt-get install -y libopencv-dev
+    - apt-get install -y git
   script:
     - mkdir build
     - cmake -S . -B build
