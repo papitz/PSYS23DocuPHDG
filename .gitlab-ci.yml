@@ -1,12 +1,13 @@
-image: debian:bullseye
+image: ernstjustus/psys-runner:latest
+
 build:
   stage: build
   tags: [Linux]
-  before_script:
-    - apt-get update
-    - apt-get install -y build-essential cmake
-    - apt-get install -y libopencv-dev
-    - apt-get install -y git
+  # before_script:
+  #   - apt-get update
+  #   - apt-get install -y build-essential cmake
+  #   - apt-get install -y libopencv-dev
+  #   - apt-get install -y git
   script:
     - mkdir build
     - cmake -S . -B build
@@ -19,7 +20,7 @@ build:
     
 
 ctest:
-  image: gitlab/gitlab-runner-helper:xenial
+  image: ernstjustus/psys-runner:latest
   stage: test
   script:
     - mkdir build
