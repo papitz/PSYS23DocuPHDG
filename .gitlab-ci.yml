@@ -8,6 +8,5 @@ build:
         - apt-get install -y libopencv-dev
     script:
         - mkdir build
-        - cd build
-        - cmake ..
-        - make
+        - cmake -S . -b build
+        - cmake --build build
