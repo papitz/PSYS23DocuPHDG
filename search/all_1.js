@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['calculateheatmatrix_1',['calculateHeatMatrix',['../namespaceheatFunctions.html#a1df3e95c5d5b653dd95f0d16ff29b153',1,'heatFunctions::calculateHeatMatrix(float **heatMatrix, float **updatedHeatMatrix, int rows, int cols, float heatTransferConstant, bool parallelFlag, float convergenceLimit)'],['../namespaceheatFunctions.html#aff9ff1bcef855957cc10b9ac4a5b02d1',1,'heatFunctions::calculateHeatMatrix(HeatMatrix &amp;heatMatrix, HeatMatrix &amp;tmpHeatMatrix, int rows, int cols, float heatTransferConstant, bool parallelFlag, float convergenceLimit)']]],
+  ['calculateheatmatrix_1',['calculateHeatMatrix',['../namespaceheatFunctions.html#add20c105c31e0134ad793efaf6bdd963',1,'heatFunctions::calculateHeatMatrix(float **heatMatrix, float **tmpHeatMatrix, int rows, int cols, float heatTransferConstant, bool parallelFlag, float convergenceLimit)'],['../namespaceheatFunctions.html#aff9ff1bcef855957cc10b9ac4a5b02d1',1,'heatFunctions::calculateHeatMatrix(HeatMatrix &amp;heatMatrix, HeatMatrix &amp;tmpHeatMatrix, int rows, int cols, float heatTransferConstant, bool parallelFlag, float convergenceLimit)']]],
   ['calculatenexttempoftile_2',['calculateNextTempOfTile',['../namespaceheatFunctions.html#a5801ec52d8e5a2c301d6109201eaf6ae',1,'heatFunctions']]],
   ['checkforconversion_3',['checkForConversion',['../classHeatMatrix.html#aeeab2018fad42e5d00ec9a85c1805225',1,'HeatMatrix']]],
   ['cols_4',['cols',['../main_8cpp.html#a4407a60bc4387adae24cee658711f2d9',1,'main.cpp']]],
