@@ -35,7 +35,7 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
-add_executable(t_HeatMatrix ./src/t_HeatMatrix.cc ./src/HeatMatrix.cpp)
+add_executable(t_HeatMatrix ./src/t_HeatMatrix.cc ./src/t_heat_functions.cc ./src/HeatMatrix.cpp ./src/heat_functions.cpp)
 target_link_libraries(t_HeatMatrix GTest::gtest_main)
 
 include(GoogleTest)

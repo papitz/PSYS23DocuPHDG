@@ -13,6 +13,7 @@ public:
     HeatMatrix(const HeatMatrix &) = default;
     void printMatrix() const;
     void setTempAt(int x, int y, float targetTemp);
+    float getTempAt(int x, int y);
     float accumulateAllTemps() const;
 
     // Subscript operator for reading elements
@@ -23,6 +24,8 @@ public:
 
     void swap(HeatMatrix& other);
     bool checkForConversion(HeatMatrix other, float conversionLimit, bool parallelFlag);
+    int getNumberOfRows();
+    int getNumberOfCols();
 
 
 private:

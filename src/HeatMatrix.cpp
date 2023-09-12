@@ -40,6 +40,45 @@ void HeatMatrix::setTempAt(int x, int y, float targetTemp) {
 }
 
 /**
+ * @brief Get the temperature of the matrix at a specified point
+ *
+ * @param[in] x X-coordinate where to set targetTemp
+ * @param[in] y Y-coordinate where to set targetTemp
+ *
+ * @throws std::invalid_argument when the point is not in the matrix
+ */
+/* TODO: Check if the exception checking is impacting performance*/
+float HeatMatrix::getTempAt(int x, int y) {
+    if (x >= matrixRows) {
+        throw std::invalid_argument(
+            "X-coordinate where temp should be set not in matrix");
+    } else if (y >= matrixCols) {
+        throw std::invalid_argument(
+            "Y-coordinate where temp should be set not in matrix");
+    }
+
+    return matrix[x][y];
+}
+
+/**
+ * @brief Returns the number of rows of the matrix
+ *
+ * @return Number of rows in the matrix
+ */
+int HeatMatrix::getNumberOfRows(){ 
+    return matrixRows;
+}
+
+/**
+ * @brief Returns the number of cols of the matrix
+ *
+ * @return Number of cols in the matrix
+ */
+int HeatMatrix::getNumberOfCols(){ 
+    return matrixCols;
+}
+
+/**
  * @brief Print the matrix to the console
  *
  */
