@@ -1,4 +1,4 @@
-image: ernstjustus/psys-runner:latest
+image: papitz/psys-runner:latest
 
 build:
   stage: build
@@ -20,7 +20,7 @@ build:
     
 
 ctest:
-  image: ernstjustus/psys-runner:latest
+  image: papitz/psys-runner:latest
   stage: test
   script:
     - mkdir build
@@ -29,7 +29,7 @@ ctest:
     - cd build
     - ctest --output-on-failure
   tags:
-    - docker
+    - [Linux]
   artifacts:
     when: always
     paths:

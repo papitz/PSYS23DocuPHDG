@@ -1,13 +1,8 @@
-cmake_minimum_required(VERSION 3.18.4)
+cmake_minimum_required(VERSION 3.16.3)
 project(HeatMatrix CXX)
 
-# Tests find_package(Catch2 2 REQUIRED) # These tests can use the
-# Catch2-provided main add_executable(tests ./src/t_HeatMatrix.cpp)
-# target_link_libraries(tests PRIVATE Catch2::Catch2WithMain) include(CTest)
-# include(Catch) catch_discover_tests(tests)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-cmake_policy(SET CMP0135 NEW)
 
 find_package(OpenCV REQUIRED)
 find_package(OpenMP REQUIRED)
