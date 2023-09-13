@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['heatmatrix_46',['HeatMatrix',['../classHeatMatrix.html#a56d13c58f49a353bd946908f739fd16f',1,'HeatMatrix::HeatMatrix(int rows, int cols)'],['../classHeatMatrix.html#a61ebf27e77577ca6b9fc880067ff20e1',1,'HeatMatrix::HeatMatrix(HeatMatrix &amp;&amp;)=default'],['../classHeatMatrix.html#ae23c32dd614cac4ce5ddcad4fe93640a',1,'HeatMatrix::HeatMatrix(const HeatMatrix &amp;)=default']]]
+  ['getnumberofcols_51',['getNumberOfCols',['../classHeatMatrix.html#ac3eb0c2f3feffe5f309e453c98a3a406',1,'HeatMatrix']]],
+  ['getnumberofrows_52',['getNumberOfRows',['../classHeatMatrix.html#a5ef96b68d5e35c762c8fb23c909655c7',1,'HeatMatrix']]],
+  ['gettempat_53',['getTempAt',['../classHeatMatrix.html#ada5c24896cf2cbf4672d9af58833f317',1,'HeatMatrix']]]
 ];

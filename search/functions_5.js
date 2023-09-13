@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['printmatrix_49',['printMatrix',['../classHeatMatrix.html#a0398760613c0d24122700ecfb0bd83df',1,'HeatMatrix']]]
+  ['operator_5b_5d_56',['operator[]',['../classHeatMatrix.html#a44aaa55292aad2dbbd889726fa23c600',1,'HeatMatrix::operator[](int index) const'],['../classHeatMatrix.html#a1d4f97bc28dc6d7a1d8c8355c7649f4a',1,'HeatMatrix::operator[](int index)']]]
 ];

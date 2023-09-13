@@ -1,10 +1,6 @@
 var searchData=
 [
-  ['heat_5ffunctions_2ecpp_7',['heat_functions.cpp',['../heat__functions_8cpp.html',1,'']]],
-  ['heat_5ffunctions_2ehpp_8',['heat_functions.hpp',['../heat__functions_8hpp.html',1,'']]],
-  ['heatfunctions_9',['heatFunctions',['../namespaceheatFunctions.html',1,'']]],
-  ['heatmatrix_10',['HeatMatrix',['../classHeatMatrix.html',1,'HeatMatrix'],['../classHeatMatrix.html#a56d13c58f49a353bd946908f739fd16f',1,'HeatMatrix::HeatMatrix(int rows, int cols)'],['../classHeatMatrix.html#a61ebf27e77577ca6b9fc880067ff20e1',1,'HeatMatrix::HeatMatrix(HeatMatrix &amp;&amp;)=default'],['../classHeatMatrix.html#ae23c32dd614cac4ce5ddcad4fe93640a',1,'HeatMatrix::HeatMatrix(const HeatMatrix &amp;)=default']]],
-  ['heatmatrix_2ecpp_11',['HeatMatrix.cpp',['../HeatMatrix_8cpp.html',1,'']]],
-  ['heatmatrix_2ehpp_12',['HeatMatrix.hpp',['../HeatMatrix_8hpp.html',1,'']]],
-  ['heattransferconstant_13',['heatTransferConstant',['../main_8cpp.html#a953b97d7cefe0726d26a2fd5fc532bbe',1,'main.cpp']]]
+  ['getnumberofcols_7',['getNumberOfCols',['../classHeatMatrix.html#ac3eb0c2f3feffe5f309e453c98a3a406',1,'HeatMatrix']]],
+  ['getnumberofrows_8',['getNumberOfRows',['../classHeatMatrix.html#a5ef96b68d5e35c762c8fb23c909655c7',1,'HeatMatrix']]],
+  ['gettempat_9',['getTempAt',['../classHeatMatrix.html#ada5c24896cf2cbf4672d9af58833f317',1,'HeatMatrix']]]
 ];

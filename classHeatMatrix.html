@@ -89,6 +89,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a553b09b86ecd4b67fe4ccbfbca598766"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHeatMatrix.html#a553b09b86ecd4b67fe4ccbfbca598766">setTempAt</a> (int x, int y, float targetTemp)</td></tr>
 <tr class="memdesc:a553b09b86ecd4b67fe4ccbfbca598766"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the temperature of the matrix at a specified point.  <a href="classHeatMatrix.html#a553b09b86ecd4b67fe4ccbfbca598766">More...</a><br /></td></tr>
 <tr class="separator:a553b09b86ecd4b67fe4ccbfbca598766"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada5c24896cf2cbf4672d9af58833f317"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHeatMatrix.html#ada5c24896cf2cbf4672d9af58833f317">getTempAt</a> (int x, int y)</td></tr>
+<tr class="memdesc:ada5c24896cf2cbf4672d9af58833f317"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the temperature of the matrix at a specified point.  <a href="classHeatMatrix.html#ada5c24896cf2cbf4672d9af58833f317">More...</a><br /></td></tr>
+<tr class="separator:ada5c24896cf2cbf4672d9af58833f317"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a86c93da14e81aa5d53c888a51b15221a"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHeatMatrix.html#a86c93da14e81aa5d53c888a51b15221a">accumulateAllTemps</a> () const</td></tr>
 <tr class="memdesc:a86c93da14e81aa5d53c888a51b15221a"><td class="mdescLeft">&#160;</td><td class="mdescRight">accumulate all temperatures of the matrix  <a href="classHeatMatrix.html#a86c93da14e81aa5d53c888a51b15221a">More...</a><br /></td></tr>
 <tr class="separator:a86c93da14e81aa5d53c888a51b15221a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -104,6 +107,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aeeab2018fad42e5d00ec9a85c1805225"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHeatMatrix.html#aeeab2018fad42e5d00ec9a85c1805225">checkForConversion</a> (<a class="el" href="classHeatMatrix.html">HeatMatrix</a> other, float conversionLimit, bool <a class="el" href="main_8cpp.html#ac13bec001fd57f5b43cfd46aa7e8bf27">parallelFlag</a>)</td></tr>
 <tr class="memdesc:aeeab2018fad42e5d00ec9a85c1805225"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the <a class="el" href="classHeatMatrix.html" title="class that keeps all data to a heat matrix">HeatMatrix</a> converged or not.  <a href="classHeatMatrix.html#aeeab2018fad42e5d00ec9a85c1805225">More...</a><br /></td></tr>
 <tr class="separator:aeeab2018fad42e5d00ec9a85c1805225"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ef96b68d5e35c762c8fb23c909655c7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHeatMatrix.html#a5ef96b68d5e35c762c8fb23c909655c7">getNumberOfRows</a> ()</td></tr>
+<tr class="memdesc:a5ef96b68d5e35c762c8fb23c909655c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of rows of the matrix.  <a href="classHeatMatrix.html#a5ef96b68d5e35c762c8fb23c909655c7">More...</a><br /></td></tr>
+<tr class="separator:a5ef96b68d5e35c762c8fb23c909655c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3eb0c2f3feffe5f309e453c98a3a406"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHeatMatrix.html#ac3eb0c2f3feffe5f309e453c98a3a406">getNumberOfCols</a> ()</td></tr>
+<tr class="memdesc:ac3eb0c2f3feffe5f309e453c98a3a406"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of cols of the matrix.  <a href="classHeatMatrix.html#ac3eb0c2f3feffe5f309e453c98a3a406">More...</a><br /></td></tr>
+<tr class="separator:ac3eb0c2f3feffe5f309e453c98a3a406"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>class that keeps all data to a heat matrix </p>
@@ -260,6 +269,89 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Boolean if the <a class="el" href="classHeatMatrix.html" title="class that keeps all data to a heat matrix">HeatMatrix</a> converged or not </dd></dl>
+
+</div>
+</div>
+<a id="ac3eb0c2f3feffe5f309e453c98a3a406"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3eb0c2f3feffe5f309e453c98a3a406">&#9670;&nbsp;</a></span>getNumberOfCols()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int HeatMatrix::getNumberOfCols </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the number of cols of the matrix. </p>
+<dl class="section return"><dt>Returns</dt><dd>Number of cols in the matrix </dd></dl>
+
+</div>
+</div>
+<a id="a5ef96b68d5e35c762c8fb23c909655c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ef96b68d5e35c762c8fb23c909655c7">&#9670;&nbsp;</a></span>getNumberOfRows()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int HeatMatrix::getNumberOfRows </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the number of rows of the matrix. </p>
+<dl class="section return"><dt>Returns</dt><dd>Number of rows in the matrix </dd></dl>
+
+</div>
+</div>
+<a id="ada5c24896cf2cbf4672d9af58833f317"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada5c24896cf2cbf4672d9af58833f317">&#9670;&nbsp;</a></span>getTempAt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float HeatMatrix::getTempAt </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the temperature of the matrix at a specified point. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>X-coordinate where to set targetTemp </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">y</td><td>Y-coordinate where to set targetTemp</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::invalid_argument</td><td>when the point is not in the matrix </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
