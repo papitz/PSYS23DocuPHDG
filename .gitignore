@@ -16,3 +16,4 @@ build
 .vscode
 .cmake/api/v1/reply
 *.avi
+test/lib

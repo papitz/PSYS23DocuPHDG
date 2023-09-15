@@ -1,12 +1,20 @@
-FROM ubuntu:20.04
-# Set environment variables for non-interactive installation
-ENV DEBIAN_FRONTEND=noninteractive
+FROM alpine:latest
 
-RUN apt-get update && \
-    apt-get install -y \
+# Set environment variables for non-interactive installation
+ENV TZ=UTC
+
+# Install necessary packages
+RUN apk update && \
+    apk upgrade && \
+    apk add --no-cache \
     cmake \
+    make \
     g++ \
     git \
-    libopencv-dev \
-    libomp-dev \
-    && apt-get clean
+    opencv-dev \
+    libgomp \
+    tzdata && \
+    cp /usr/share/zoneinfo/$TZ /etc/localtime && \
+    echo $TZ > /etc/timezone && \
+    apk del tzdata && \
+    rm -rf /var/cache/apk/*
