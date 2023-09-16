@@ -28,6 +28,6 @@ ctest:
   tags: [Linux]
   artifacts:
     paths:
-      - unittestResults.xml
+      - test/unittestResults.xml
     reports:
-      junit: unittestResults.xml
+      junit: test/unittestResults.xml
