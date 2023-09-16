@@ -1,27 +1,20 @@
 image: papitz/psys-runner:latest
 
-# build:
-#   stage: build
-#   tags: [Linux]
-#   # before_script:
-#   #   - apt-get update
-#   #   - apt-get install -y build-essential cmake
-#   #   - apt-get install -y libopencv-dev
-#   #   - apt-get install -y git
-#   script:
-#     - mkdir build
-#     - cmake -S . -B build
-#     - cmake --build build
-#
-#   artifacts:
-#     paths:
-#       - build/HeatMatrix
-#       - build/t_HeatMatrix
+build:
+  stage: build
+  tags: [Linux]
+  script:
+    - mkdir build
+    - cmake -S . -B build
+    - cmake --build build
+
+  artifacts:
+    paths:
+      - build/HeatMatrix
 
 ctest:
   stage: test
   script:
-    - set -xe
     - cd test
     - cmake .
     - cmake --build .
