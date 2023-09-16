@@ -17,3 +17,5 @@ build
 .cmake/api/v1/reply
 *.avi
 test/lib
+test/t_HeatMatrix[1]_include.cmake
+test/t_HeatMatrix[1]_tests.cmake

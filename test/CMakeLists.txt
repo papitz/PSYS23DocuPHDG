@@ -6,6 +6,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(OpenCV REQUIRED)
 find_package(OpenMP REQUIRED)
 
+include_directories(${OpenCV_INCLUDE_DIRS} include)
+if(OpenMP_CXX_FOUND)
+  target_link_libraries(${PROJECT_NAME} PUBLIC OpenMP::OpenMP_CXX
+                                               ${OpenCV_LIBS})
+endif()
+
 include(FetchContent)
 FetchContent_Declare(
   googletest
@@ -18,7 +24,8 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
-add_executable(t_HeatMatrix ./t_HeatMatrix.cc ./t_heat_functions.cc ../src/HeatMatrix.cpp ../src/heat_functions.cpp)
+add_executable(${PROJECT_NAME} ./t_HeatMatrix.cc ./t_heat_functions.cc
+                               ../src/HeatMatrix.cpp ../src/heat_functions.cpp)
 target_link_libraries(t_HeatMatrix GTest::gtest_main)
 
 include(GoogleTest)
