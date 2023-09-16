@@ -21,6 +21,7 @@ image: papitz/psys-runner:latest
 ctest:
   stage: test
   script:
+    - set -xe
     - cd test
     - cmake .
     - cmake --build .
