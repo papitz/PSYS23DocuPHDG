@@ -29,6 +29,6 @@ ctest:
   artifacts:
     when: always
     paths:
-      - build/Testing/Temporary/LastTest.log
+      - Testing/Temporary/LastTest.log
     reports:
-      junit: build/Testing/Temporary/LastTest.log
+      junit: Testing/Temporary/LastTest.log
