@@ -24,11 +24,10 @@ ctest:
     - cd test
     - cmake .
     - cmake --build .
-    - ctest --output-on-failure
+    - ./t_HeatMatrix --gtest_output="xml:unittestResults.xml"
   tags: [Linux]
   artifacts:
-    when: always
     paths:
-      - test/Testing/Temporary/LastTest.log
+      - unittestResults.xml
     reports:
-      junit: test/Testing/Temporary/LastTest.log
+      junit: unittestResults.xml
