@@ -7,10 +7,6 @@ find_package(OpenCV REQUIRED)
 find_package(OpenMP REQUIRED)
 
 include_directories(${OpenCV_INCLUDE_DIRS} include)
-if(OpenMP_CXX_FOUND)
-  target_link_libraries(${PROJECT_NAME} PUBLIC OpenMP::OpenMP_CXX
-                                               ${OpenCV_LIBS})
-endif()
 
 include(FetchContent)
 FetchContent_Declare(
@@ -26,7 +22,11 @@ enable_testing()
 
 add_executable(${PROJECT_NAME} ./t_HeatMatrix.cc ./t_heat_functions.cc
                                ../src/HeatMatrix.cpp ../src/heat_functions.cpp)
-target_link_libraries(t_HeatMatrix GTest::gtest_main)
+target_link_libraries(${PROJECT_NAME} GTest::gtest_main)
+if(OpenMP_CXX_FOUND)
+  target_link_libraries(${PROJECT_NAME} PUBLIC OpenMP::OpenMP_CXX
+                                               ${OpenCV_LIBS})
+endif()
 
 include(GoogleTest)
 gtest_discover_tests(t_HeatMatrix)
