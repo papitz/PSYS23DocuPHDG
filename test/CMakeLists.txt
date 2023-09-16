@@ -22,10 +22,9 @@ enable_testing()
 
 add_executable(${PROJECT_NAME} ./t_HeatMatrix.cc ./t_heat_functions.cc
                                ../src/HeatMatrix.cpp ../src/heat_functions.cpp)
-target_link_libraries(${PROJECT_NAME} GTest::gtest_main)
 if(OpenMP_CXX_FOUND)
   target_link_libraries(${PROJECT_NAME} PUBLIC OpenMP::OpenMP_CXX
-                                               ${OpenCV_LIBS})
+                                               ${OpenCV_LIBS} GTest::gtest_main)
 endif()
 
 include(GoogleTest)
