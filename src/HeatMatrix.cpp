@@ -5,6 +5,7 @@
 #include <numeric>
 #include <omp.h>
 #include <stdexcept>
+#include <vector>
 
 /**
  * @brief Constructor for HeatMatrix. Initializes a matrix that has number of
@@ -16,6 +17,16 @@
 HeatMatrix::HeatMatrix(int rows, int cols)
     : matrix(rows, std::vector<float>(cols, 0.0)), matrixRows(rows),
       matrixCols(cols) {}
+
+/**
+ * @brief Constructor for HeatMatrix. Initializes a matrix that has number of
+ * rows and cols as specified in size
+ *
+ * @param[in] rows Rows of the matrix
+ * @param[in] cols Columns of the matrix
+ */
+HeatMatrix::HeatMatrix(std::vector<std::vector<float>> matrix)
+    : matrix(matrix), matrixRows(matrix.size()), matrixCols(matrix[0].size()) {}
 
 /**
  * @brief Sets the temperature of the matrix at a specified point
@@ -37,6 +48,24 @@ void HeatMatrix::setTempAt(int x, int y, float targetTemp) {
     }
 
     matrix[x][y] = targetTemp;
+}
+
+/**
+ * @brief Set the temperature in an area of the matrix
+ *
+ * @param[in] xStart X-coordinate to start from
+ * @param[in] xEnd X-coordinate to end at
+ * @param[in] yStart Y-coordinate to start from
+ * @param[in] yEnd Y-coordinate to end at
+ * @param[in] targetTemp Temperature to set
+ */
+void HeatMatrix::setTempInArea(int xStart, int xEnd, int yStart, int yEnd,
+                               float targetTemp) {
+    for (int x = xStart; x <= xEnd; x++) {
+        for (int y = yStart; y <= yEnd; y++) {
+            setTempAt(x, y, targetTemp);
+        }
+    }
 }
 
 /**
@@ -65,18 +94,14 @@ float HeatMatrix::getTempAt(int x, int y) {
  *
  * @return Number of rows in the matrix
  */
-int HeatMatrix::getNumberOfRows(){ 
-    return matrixRows;
-}
+int HeatMatrix::getNumberOfRows() { return matrixRows; }
 
 /**
  * @brief Returns the number of cols of the matrix
  *
  * @return Number of cols in the matrix
  */
-int HeatMatrix::getNumberOfCols(){ 
-    return matrixCols;
-}
+int HeatMatrix::getNumberOfCols() { return matrixCols; }
 
 /**
  * @brief Print the matrix to the console
@@ -84,11 +109,43 @@ int HeatMatrix::getNumberOfCols(){
  */
 void HeatMatrix::printMatrix() const {
     for (const std::vector<float> &row : matrix) {
-        for (int value : row) {
+        for (float value : row) {
             std::cout << value << " ";
         }
         std::cout << std::endl;
     }
+}
+
+/**
+ * @brief Get a slice of the matrix
+ *
+ * @param[in] divider number of processes by which to divide the matrix
+ * @param[in] processNumber number of the process that wants the matrix slice
+ * @return A slice of the matrix suited for mpi calculation
+ */
+HeatMatrix HeatMatrix::getSliceOfMatrix(int divider, int processNumber) {
+
+    int rowsPerProcess = matrixRows / divider;
+    // Either row 0 or the second to last row of the next block
+    auto startRow = std::max(processNumber * rowsPerProcess - 1, 0);
+    // Eihter the last row or the second row of the next block
+    auto endRow =
+        std::min((processNumber + 1) * rowsPerProcess, matrixCols - 1);
+
+    std::vector<std::vector<float>> newMatrix;
+    for (int i = startRow; i <= endRow; i++) {
+        newMatrix.push_back(std::vector(matrix[i]));
+    }
+
+    // Print the matrix for debuggging
+    /* for (const std::vector<float> &row : newMatrix) { */
+    /*     for (float value : row) { */
+    /*         std::cout << value << " "; */
+    /*     } */
+    /*     std::cout << std::endl; */
+    /* } */
+
+    return HeatMatrix(newMatrix);
 }
 
 /**

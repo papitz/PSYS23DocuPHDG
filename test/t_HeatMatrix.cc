@@ -1,5 +1,5 @@
-#include "gtest/gtest.h"
 #include "../include/HeatMatrix.hpp"
+#include "gtest/gtest.h"
 
 // Create a HeatMatrix and check its dimensions
 TEST(HeatMatrixTest, ConstructorAndDimensions) {
@@ -14,7 +14,7 @@ TEST(HeatMatrixTest, ConstructorAndDimensions) {
 // Set and get temperature at a specific point
 TEST(HeatMatrixTest, SetAndGetTemp) {
     HeatMatrix matrix(2, 2);
-    
+
     // Set temperature at (0, 1) to 25.5
     matrix.setTempAt(0, 1, 25.5);
     ASSERT_FLOAT_EQ(matrix.getTempAt(0, 1), 25.5);
@@ -33,7 +33,7 @@ TEST(HeatMatrixTest, AccumulateAllTemps) {
     matrix.setTempAt(1, 2, 2.0);
     matrix.setTempAt(2, 1, 3.0);
     matrix.setTempAt(2, 2, 4.0);
-    
+
     ASSERT_FLOAT_EQ(matrix.accumulateAllTemps(), 10.0); // 1 + 2 + 3 + 4 = 10
 }
 
@@ -54,8 +54,58 @@ TEST(HeatMatrixTest, CheckForConversion) {
     // Change one value slightly, they should not converge
     matrix2.setTempAt(0, 0, 1.1);
     ASSERT_FALSE(matrix1.checkForConversion(matrix2, 0.01, false));
-    
+
     // Attempt convergence check with different matrix dimensions
     /* HeatMatrix matrix3(3, 3); */
-    /* ASSERT_THROW(matrix1.checkForConversion(matrix3, 0.01, false), std::invalid_argument); */
+    /* ASSERT_THROW(matrix1.checkForConversion(matrix3, 0.01, false),
+     * std::invalid_argument); */
+}
+
+TEST(HeatMatrixTest, setTempInArea){
+    HeatMatrix matrix(4,4);
+    matrix.setTempInArea(1, 2, 0, 3, 3.14159);
+    ASSERT_FLOAT_EQ(matrix.getTempAt(2, 2), 3.14159);
+    ASSERT_FLOAT_EQ(matrix.getTempAt(3, 3), 0.0);
+}
+
+TEST(HeatMatrixTest, SliceTest) {
+
+    /**
+     * [[1.0,1.0,1.0,1.0,1.0,1.0,],
+     * [1.0,1.0,1.0,1.0,1.0,1.0,],
+     * [1.0,1.0,1.0,1.0,1.0,1.0,],
+     * [2.0,2.0,2.0,2.0,2.0,2.0,],
+     * [2.0,2.0,2.0,2.0,2.0,2.0,],
+     * [2.0,2.0,2.0,2.0,2.0,2.0,]]
+     **/
+    HeatMatrix matrix(6, 6);
+    /**
+     * [[1.0,1.0,1.0,1.0,1.0,1.0,],
+     * [1.0,1.0,1.0,1.0,1.0,1.0,],
+     * [1.0,1.0,1.0,1.0,1.0,1.0,],
+     * [2.0,2.0,2.0,2.0,2.0,2.0,]]
+     **/
+    HeatMatrix matrixSlice1(4, 6);
+    /**
+     * [[1.0,1.0,1.0,1.0,1.0,1.0,],
+     * [2.0,2.0,2.0,2.0,2.0,2.0,],
+     * [2.0,2.0,2.0,2.0,2.0,2.0,],
+     * [2.0,2.0,2.0,2.0,2.0,2.0,]]
+     **/
+    HeatMatrix matrixSlice2(4, 6);
+
+    matrix.setTempInArea(0, 2, 0, 5, 1.0);
+    matrix.setTempInArea(3, 5, 0, 5, 2.0);
+    matrixSlice1.setTempInArea(0, 2, 0, 5, 1.0);
+    matrixSlice1.setTempInArea(3, 3, 0, 5, 2.0);
+    matrixSlice2.setTempInArea(0, 0, 0, 5, 1.0);
+    matrixSlice2.setTempInArea(1, 3, 0, 5, 2.0);
+
+    HeatMatrix generatedSlice1 = matrix.getSliceOfMatrix(2, 0);
+    HeatMatrix generatedSlice2 = matrix.getSliceOfMatrix(2, 1);
+
+    /* TODO: Make an equals op for the matrixes*/
+    ASSERT_FLOAT_EQ(matrixSlice1.getTempAt(0, 0), generatedSlice1.getTempAt(0, 0));
+    ASSERT_FLOAT_EQ(matrixSlice2.getTempAt(0, 0), generatedSlice2.getTempAt(0, 0));
+
 }

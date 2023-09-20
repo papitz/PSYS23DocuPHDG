@@ -4,9 +4,9 @@ FROM alpine:latest
 ENV TZ=UTC
 
 # Install necessary packages
-RUN apk update && \
-    apk upgrade && \
-    apk add --no-cache \
+# RUN apk update && \
+#     apk upgrade && \
+RUN apk add --no-cache \
     cmake \
     make \
     g++ \
