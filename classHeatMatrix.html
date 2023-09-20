@@ -63,6 +63,8 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#friends">Friends</a> &#124;
 <a href="classHeatMatrix-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">HeatMatrix Class Reference</div>  </div>
@@ -79,6 +81,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a56d13c58f49a353bd946908f739fd16f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHeatMatrix.html#a56d13c58f49a353bd946908f739fd16f">HeatMatrix</a> (int <a class="el" href="main_8cpp.html#a061459acc9e078fa4699e0e349887215">rows</a>, int <a class="el" href="main_8cpp.html#a4407a60bc4387adae24cee658711f2d9">cols</a>)</td></tr>
 <tr class="memdesc:a56d13c58f49a353bd946908f739fd16f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for <a class="el" href="classHeatMatrix.html" title="class that keeps all data to a heat matrix">HeatMatrix</a>. Initializes a matrix that has number of rows and cols as specified in size.  <a href="classHeatMatrix.html#a56d13c58f49a353bd946908f739fd16f">More...</a><br /></td></tr>
 <tr class="separator:a56d13c58f49a353bd946908f739fd16f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e516bb2d2361a8f5f90505999f15989"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHeatMatrix.html#a4e516bb2d2361a8f5f90505999f15989">HeatMatrix</a> (std::vector&lt; std::vector&lt; float &gt;&gt; matrix)</td></tr>
+<tr class="memdesc:a4e516bb2d2361a8f5f90505999f15989"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for <a class="el" href="classHeatMatrix.html" title="class that keeps all data to a heat matrix">HeatMatrix</a>. Initializes a matrix that has number of rows and cols as specified in size.  <a href="classHeatMatrix.html#a4e516bb2d2361a8f5f90505999f15989">More...</a><br /></td></tr>
+<tr class="separator:a4e516bb2d2361a8f5f90505999f15989"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a61ebf27e77577ca6b9fc880067ff20e1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHeatMatrix.html#a61ebf27e77577ca6b9fc880067ff20e1">HeatMatrix</a> (<a class="el" href="classHeatMatrix.html">HeatMatrix</a> &amp;&amp;)=default</td></tr>
 <tr class="separator:a61ebf27e77577ca6b9fc880067ff20e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae23c32dd614cac4ce5ddcad4fe93640a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHeatMatrix.html#ae23c32dd614cac4ce5ddcad4fe93640a">HeatMatrix</a> (const <a class="el" href="classHeatMatrix.html">HeatMatrix</a> &amp;)=default</td></tr>
@@ -89,36 +94,59 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a553b09b86ecd4b67fe4ccbfbca598766"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHeatMatrix.html#a553b09b86ecd4b67fe4ccbfbca598766">setTempAt</a> (int x, int y, float targetTemp)</td></tr>
 <tr class="memdesc:a553b09b86ecd4b67fe4ccbfbca598766"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the temperature of the matrix at a specified point.  <a href="classHeatMatrix.html#a553b09b86ecd4b67fe4ccbfbca598766">More...</a><br /></td></tr>
 <tr class="separator:a553b09b86ecd4b67fe4ccbfbca598766"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1837228b4f24878337146c36521455d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHeatMatrix.html#a1837228b4f24878337146c36521455d8">setTempInArea</a> (int xStart, int xEnd, int yStart, int yEnd, float targetTemp)</td></tr>
+<tr class="memdesc:a1837228b4f24878337146c36521455d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the temperature in an area of the matrix.  <a href="classHeatMatrix.html#a1837228b4f24878337146c36521455d8">More...</a><br /></td></tr>
+<tr class="separator:a1837228b4f24878337146c36521455d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ada5c24896cf2cbf4672d9af58833f317"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHeatMatrix.html#ada5c24896cf2cbf4672d9af58833f317">getTempAt</a> (int x, int y)</td></tr>
 <tr class="memdesc:ada5c24896cf2cbf4672d9af58833f317"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the temperature of the matrix at a specified point.  <a href="classHeatMatrix.html#ada5c24896cf2cbf4672d9af58833f317">More...</a><br /></td></tr>
 <tr class="separator:ada5c24896cf2cbf4672d9af58833f317"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a86c93da14e81aa5d53c888a51b15221a"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHeatMatrix.html#a86c93da14e81aa5d53c888a51b15221a">accumulateAllTemps</a> () const</td></tr>
 <tr class="memdesc:a86c93da14e81aa5d53c888a51b15221a"><td class="mdescLeft">&#160;</td><td class="mdescRight">accumulate all temperatures of the matrix  <a href="classHeatMatrix.html#a86c93da14e81aa5d53c888a51b15221a">More...</a><br /></td></tr>
 <tr class="separator:a86c93da14e81aa5d53c888a51b15221a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91501b5eccbb128f200a46bb7ee82474"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classHeatMatrix.html">HeatMatrix</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHeatMatrix.html#a91501b5eccbb128f200a46bb7ee82474">getSliceOfMatrix</a> (int divider, int processNumber)</td></tr>
+<tr class="memdesc:a91501b5eccbb128f200a46bb7ee82474"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a slice of the matrix.  <a href="classHeatMatrix.html#a91501b5eccbb128f200a46bb7ee82474">More...</a><br /></td></tr>
+<tr class="separator:a91501b5eccbb128f200a46bb7ee82474"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a44aaa55292aad2dbbd889726fa23c600"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; float &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHeatMatrix.html#a44aaa55292aad2dbbd889726fa23c600">operator[]</a> (int index) const</td></tr>
 <tr class="memdesc:a44aaa55292aad2dbbd889726fa23c600"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subscript operator implementation for reading elements.  <a href="classHeatMatrix.html#a44aaa55292aad2dbbd889726fa23c600">More...</a><br /></td></tr>
 <tr class="separator:a44aaa55292aad2dbbd889726fa23c600"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d4f97bc28dc6d7a1d8c8355c7649f4a"><td class="memItemLeft" align="right" valign="top">std::vector&lt; float &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHeatMatrix.html#a1d4f97bc28dc6d7a1d8c8355c7649f4a">operator[]</a> (int index)</td></tr>
 <tr class="memdesc:a1d4f97bc28dc6d7a1d8c8355c7649f4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subscript operator implementation for modifying elements.  <a href="classHeatMatrix.html#a1d4f97bc28dc6d7a1d8c8355c7649f4a">More...</a><br /></td></tr>
 <tr class="separator:a1d4f97bc28dc6d7a1d8c8355c7649f4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a534b9f70dc0fa696218342963425cdf6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHeatMatrix.html#a534b9f70dc0fa696218342963425cdf6">operator==</a> (const <a class="el" href="classHeatMatrix.html">HeatMatrix</a> &amp;other) const</td></tr>
+<tr class="memdesc:a534b9f70dc0fa696218342963425cdf6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Equality operator.  <a href="classHeatMatrix.html#a534b9f70dc0fa696218342963425cdf6">More...</a><br /></td></tr>
+<tr class="separator:a534b9f70dc0fa696218342963425cdf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1f684b7e22d0dad579a712b02b7952ec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHeatMatrix.html#a1f684b7e22d0dad579a712b02b7952ec">swap</a> (<a class="el" href="classHeatMatrix.html">HeatMatrix</a> &amp;other)</td></tr>
 <tr class="memdesc:a1f684b7e22d0dad579a712b02b7952ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Custom swap function implementation.  <a href="classHeatMatrix.html#a1f684b7e22d0dad579a712b02b7952ec">More...</a><br /></td></tr>
 <tr class="separator:a1f684b7e22d0dad579a712b02b7952ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeeab2018fad42e5d00ec9a85c1805225"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHeatMatrix.html#aeeab2018fad42e5d00ec9a85c1805225">checkForConversion</a> (<a class="el" href="classHeatMatrix.html">HeatMatrix</a> other, float conversionLimit, bool <a class="el" href="main_8cpp.html#ac13bec001fd57f5b43cfd46aa7e8bf27">parallelFlag</a>)</td></tr>
 <tr class="memdesc:aeeab2018fad42e5d00ec9a85c1805225"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the <a class="el" href="classHeatMatrix.html" title="class that keeps all data to a heat matrix">HeatMatrix</a> converged or not.  <a href="classHeatMatrix.html#aeeab2018fad42e5d00ec9a85c1805225">More...</a><br /></td></tr>
 <tr class="separator:aeeab2018fad42e5d00ec9a85c1805225"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ef96b68d5e35c762c8fb23c909655c7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHeatMatrix.html#a5ef96b68d5e35c762c8fb23c909655c7">getNumberOfRows</a> ()</td></tr>
-<tr class="memdesc:a5ef96b68d5e35c762c8fb23c909655c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of rows of the matrix.  <a href="classHeatMatrix.html#a5ef96b68d5e35c762c8fb23c909655c7">More...</a><br /></td></tr>
-<tr class="separator:a5ef96b68d5e35c762c8fb23c909655c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3eb0c2f3feffe5f309e453c98a3a406"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHeatMatrix.html#ac3eb0c2f3feffe5f309e453c98a3a406">getNumberOfCols</a> ()</td></tr>
-<tr class="memdesc:ac3eb0c2f3feffe5f309e453c98a3a406"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of cols of the matrix.  <a href="classHeatMatrix.html#ac3eb0c2f3feffe5f309e453c98a3a406">More...</a><br /></td></tr>
-<tr class="separator:ac3eb0c2f3feffe5f309e453c98a3a406"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5bad42fc3306cc4a37968f5cc9ce0be"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHeatMatrix.html#ab5bad42fc3306cc4a37968f5cc9ce0be">getNumberOfRows</a> () const</td></tr>
+<tr class="memdesc:ab5bad42fc3306cc4a37968f5cc9ce0be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of rows of the matrix.  <a href="classHeatMatrix.html#ab5bad42fc3306cc4a37968f5cc9ce0be">More...</a><br /></td></tr>
+<tr class="separator:ab5bad42fc3306cc4a37968f5cc9ce0be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcb79c9d20bdea5f549bf89ace7199b9"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHeatMatrix.html#afcb79c9d20bdea5f549bf89ace7199b9">getNumberOfCols</a> () const</td></tr>
+<tr class="memdesc:afcb79c9d20bdea5f549bf89ace7199b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of cols of the matrix.  <a href="classHeatMatrix.html#afcb79c9d20bdea5f549bf89ace7199b9">More...</a><br /></td></tr>
+<tr class="separator:afcb79c9d20bdea5f549bf89ace7199b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cacbffd0d37057ea0be9f7e3e5a53ad"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; float &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHeatMatrix.html#a2cacbffd0d37057ea0be9f7e3e5a53ad">getMatrixData</a> ()</td></tr>
+<tr class="memdesc:a2cacbffd0d37057ea0be9f7e3e5a53ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the matrix data.  <a href="classHeatMatrix.html#a2cacbffd0d37057ea0be9f7e3e5a53ad">More...</a><br /></td></tr>
+<tr class="separator:a2cacbffd0d37057ea0be9f7e3e5a53ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:aabb0ea3f9d2f2793a8e6dc8d79986eed"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classHeatMatrix.html">HeatMatrix</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHeatMatrix.html#aabb0ea3f9d2f2793a8e6dc8d79986eed">collectMatricesAfterMPICalc</a> (std::vector&lt; <a class="el" href="classHeatMatrix.html">HeatMatrix</a> &gt; heatMatrices)</td></tr>
+<tr class="separator:aabb0ea3f9d2f2793a8e6dc8d79986eed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:a612d1b6b254f25aa789d4941b2d32fa6"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHeatMatrix.html#a612d1b6b254f25aa789d4941b2d32fa6">operator&lt;&lt;</a> (std::ostream &amp;os, const <a class="el" href="classHeatMatrix.html">HeatMatrix</a> &amp;heatMatrix)</td></tr>
+<tr class="memdesc:a612d1b6b254f25aa789d4941b2d32fa6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operator to be able to let google tests properly output the matrices if something goes wrong.  <a href="classHeatMatrix.html#a612d1b6b254f25aa789d4941b2d32fa6">More...</a><br /></td></tr>
+<tr class="separator:a612d1b6b254f25aa789d4941b2d32fa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>class that keeps all data to a heat matrix </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a56d13c58f49a353bd946908f739fd16f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a56d13c58f49a353bd946908f739fd16f">&#9670;&nbsp;</a></span>HeatMatrix() <span class="overload">[1/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a56d13c58f49a353bd946908f739fd16f">&#9670;&nbsp;</a></span>HeatMatrix() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -154,8 +182,35 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a4e516bb2d2361a8f5f90505999f15989"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e516bb2d2361a8f5f90505999f15989">&#9670;&nbsp;</a></span>HeatMatrix() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">HeatMatrix::HeatMatrix </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; std::vector&lt; float &gt;&gt;&#160;</td>
+          <td class="paramname"><em>matrix</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor for <a class="el" href="classHeatMatrix.html" title="class that keeps all data to a heat matrix">HeatMatrix</a>. Initializes a matrix that has number of rows and cols as specified in size. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">rows</td><td>Rows of the matrix </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cols</td><td>Columns of the matrix </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a61ebf27e77577ca6b9fc880067ff20e1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a61ebf27e77577ca6b9fc880067ff20e1">&#9670;&nbsp;</a></span>HeatMatrix() <span class="overload">[2/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a61ebf27e77577ca6b9fc880067ff20e1">&#9670;&nbsp;</a></span>HeatMatrix() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -181,7 +236,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="ae23c32dd614cac4ce5ddcad4fe93640a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae23c32dd614cac4ce5ddcad4fe93640a">&#9670;&nbsp;</a></span>HeatMatrix() <span class="overload">[3/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae23c32dd614cac4ce5ddcad4fe93640a">&#9670;&nbsp;</a></span>HeatMatrix() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -272,17 +327,63 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ac3eb0c2f3feffe5f309e453c98a3a406"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac3eb0c2f3feffe5f309e453c98a3a406">&#9670;&nbsp;</a></span>getNumberOfCols()</h2>
+<a id="aabb0ea3f9d2f2793a8e6dc8d79986eed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aabb0ea3f9d2f2793a8e6dc8d79986eed">&#9670;&nbsp;</a></span>collectMatricesAfterMPICalc()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classHeatMatrix.html">HeatMatrix</a> HeatMatrix::collectMatricesAfterMPICalc </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="classHeatMatrix.html">HeatMatrix</a> &gt;&#160;</td>
+          <td class="paramname"><em>heatMatrices</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2cacbffd0d37057ea0be9f7e3e5a53ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2cacbffd0d37057ea0be9f7e3e5a53ad">&#9670;&nbsp;</a></span>getMatrixData()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int HeatMatrix::getNumberOfCols </td>
+          <td class="memname">std::vector&lt; std::vector&lt; float &gt; &gt; HeatMatrix::getMatrixData </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the matrix data. </p>
+<dl class="section return"><dt>Returns</dt><dd>the vector data of the matrix </dd></dl>
+
+</div>
+</div>
+<a id="afcb79c9d20bdea5f549bf89ace7199b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afcb79c9d20bdea5f549bf89ace7199b9">&#9670;&nbsp;</a></span>getNumberOfCols()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int HeatMatrix::getNumberOfCols </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -292,23 +393,61 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a5ef96b68d5e35c762c8fb23c909655c7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5ef96b68d5e35c762c8fb23c909655c7">&#9670;&nbsp;</a></span>getNumberOfRows()</h2>
+<a id="ab5bad42fc3306cc4a37968f5cc9ce0be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5bad42fc3306cc4a37968f5cc9ce0be">&#9670;&nbsp;</a></span>getNumberOfRows()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int HeatMatrix::getNumberOfRows </td>
+          <td class="memname">const int HeatMatrix::getNumberOfRows </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Returns the number of rows of the matrix. </p>
 <dl class="section return"><dt>Returns</dt><dd>Number of rows in the matrix </dd></dl>
+
+</div>
+</div>
+<a id="a91501b5eccbb128f200a46bb7ee82474"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91501b5eccbb128f200a46bb7ee82474">&#9670;&nbsp;</a></span>getSliceOfMatrix()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classHeatMatrix.html">HeatMatrix</a> HeatMatrix::getSliceOfMatrix </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>divider</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>processNumber</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get a slice of the matrix. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">divider</td><td>number of processes by which to divide the matrix </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">processNumber</td><td>number of the process that wants the matrix slice </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A slice of the matrix suited for mpi calculation </dd></dl>
 
 </div>
 </div>
@@ -352,6 +491,33 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a534b9f70dc0fa696218342963425cdf6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a534b9f70dc0fa696218342963425cdf6">&#9670;&nbsp;</a></span>operator==()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool HeatMatrix::operator== </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classHeatMatrix.html">HeatMatrix</a> &amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Equality operator. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td><a class="el" href="classHeatMatrix.html" title="class that keeps all data to a heat matrix">HeatMatrix</a> to compore to </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>If the two matrices are equal or not </dd></dl>
 
 </div>
 </div>
@@ -464,6 +630,64 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a1837228b4f24878337146c36521455d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1837228b4f24878337146c36521455d8">&#9670;&nbsp;</a></span>setTempInArea()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void HeatMatrix::setTempInArea </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>xStart</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>xEnd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>yStart</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>yEnd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>targetTemp</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the temperature in an area of the matrix. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">xStart</td><td>X-coordinate to start from </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">xEnd</td><td>X-coordinate to end at </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">yStart</td><td>Y-coordinate to start from </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">yEnd</td><td>Y-coordinate to end at </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">targetTemp</td><td>Temperature to set </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a1f684b7e22d0dad579a712b02b7952ec"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1f684b7e22d0dad579a712b02b7952ec">&#9670;&nbsp;</a></span>swap()</h2>
 
@@ -487,6 +711,45 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<h2 class="groupheader">Friends And Related Function Documentation</h2>
+<a id="a612d1b6b254f25aa789d4941b2d32fa6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a612d1b6b254f25aa789d4941b2d32fa6">&#9670;&nbsp;</a></span>operator&lt;&lt;</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream&amp; operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>os</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classHeatMatrix.html">HeatMatrix</a> &amp;&#160;</td>
+          <td class="paramname"><em>heatMatrix</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Operator to be able to let google tests properly output the matrices if something goes wrong. </p>
 
 </div>
 </div>

@@ -6,7 +6,8 @@ var indexSectionsWithContent =
   3: "hmrt",
   4: "acghmopstz",
   5: "chmnprs",
-  6: "p"
+  6: "o",
+  7: "p"
 };
 
 var indexSectionNames =
@@ -17,7 +18,8 @@ var indexSectionNames =
   3: "files",
   4: "functions",
   5: "variables",
-  6: "pages"
+  6: "related",
+  7: "pages"
 };
 
 var indexSectionLabels =
@@ -28,6 +30,7 @@ var indexSectionLabels =
   3: "Files",
   4: "Functions",
   5: "Variables",
-  6: "Pages"
+  6: "Friends",
+  7: "Pages"
 };
 
