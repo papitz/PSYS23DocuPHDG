@@ -70,6 +70,7 @@ TEST(HeatMatrixTest, setTempInArea){
 
 TEST(HeatMatrixTest, SliceTest) {
 
+    /* TODO: Streamline this into dicts*/
     /**
      * [[1.0,1.0,1.0,1.0,1.0,1.0,],
      * [1.0,1.0,1.0,1.0,1.0,1.0,],
@@ -104,8 +105,17 @@ TEST(HeatMatrixTest, SliceTest) {
     HeatMatrix generatedSlice1 = matrix.getSliceOfMatrix(2, 0);
     HeatMatrix generatedSlice2 = matrix.getSliceOfMatrix(2, 1);
 
-    /* TODO: Make an equals op for the matrixes*/
-    ASSERT_FLOAT_EQ(matrixSlice1.getTempAt(0, 0), generatedSlice1.getTempAt(0, 0));
-    ASSERT_FLOAT_EQ(matrixSlice2.getTempAt(0, 0), generatedSlice2.getTempAt(0, 0));
+    ASSERT_EQ(matrixSlice1, generatedSlice1);
+    ASSERT_EQ(matrixSlice2, generatedSlice2);
 
+    // Test if we can put the matrix back together properly
+    HeatMatrix collectedMatrix = HeatMatrix::collectMatricesAfterMPICalc(std::vector({generatedSlice1, generatedSlice2}));
+    ASSERT_EQ(matrix, collectedMatrix);
+    // Print the matrix for debuggging
+    /* for (const std::vector<float> &row : collectedMatrix.getMatrixData()) { */
+    /*     for (float value : row) { */
+    /*         std::cout << value << " "; */
+    /*     } */
+    /*     std::cout << std::endl; */
+    /* } */
 }

@@ -94,14 +94,23 @@ float HeatMatrix::getTempAt(int x, int y) {
  *
  * @return Number of rows in the matrix
  */
-int HeatMatrix::getNumberOfRows() { return matrixRows; }
+const int HeatMatrix::getNumberOfRows() const { return matrixRows; }
 
 /**
  * @brief Returns the number of cols of the matrix
  *
  * @return Number of cols in the matrix
  */
-int HeatMatrix::getNumberOfCols() { return matrixCols; }
+const int HeatMatrix::getNumberOfCols() const { return matrixCols; }
+
+/**
+ * @brief Get the matrix data
+ *
+ * @return the vector data of the matrix
+ */
+std::vector<std::vector<float>> HeatMatrix::getMatrixData() {
+    return matrix;
+}
 
 /**
  * @brief Print the matrix to the console
@@ -146,6 +155,20 @@ HeatMatrix HeatMatrix::getSliceOfMatrix(int divider, int processNumber) {
     /* } */
 
     return HeatMatrix(newMatrix);
+}
+
+HeatMatrix HeatMatrix::collectMatricesAfterMPICalc(std::vector<HeatMatrix> heatMatrices) {
+    std::vector<std::vector<float>> collectedVectors;
+    collectedVectors.push_back(heatMatrices[0].getMatrixData()[0]);
+    for (int i = 0; i < heatMatrices.size(); i++) {
+        for (int row = 1; row < heatMatrices[i].getNumberOfRows() - 1; row++) {
+            collectedVectors.push_back(heatMatrices[i].getMatrixData()[row]);
+        }
+    }
+    int lastIndex = heatMatrices.size() - 1;
+    collectedVectors.push_back(heatMatrices[lastIndex].getMatrixData()[heatMatrices[lastIndex].getNumberOfRows() - 1]);
+
+    return HeatMatrix(collectedVectors);
 }
 
 /**
@@ -213,4 +236,41 @@ void HeatMatrix::swap(HeatMatrix &other) {
         throw std::invalid_argument("Matrices need to be of same size");
     }
     std::swap(matrix, other.matrix);
+}
+
+/**
+ * @brief Equality operator
+ *
+ * @param[in] other HeatMatrix to compore to
+ * @return If the two matrices are equal or not
+ */
+bool HeatMatrix::operator==(const HeatMatrix& other) const {
+    // Check if the dimensions match
+    if (matrixRows != other.matrixRows || matrixCols != other.matrixCols) {
+        return false;
+    }
+
+    // Compare the vectors
+    for (int i = 0; i < matrixRows; ++i) {
+        if (matrix[i] != other.matrix[i]) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+/**
+ * @brief Operator to be able to let google tests properly output the matrices if something goes wrong
+ *
+ */
+std::ostream& operator<<(std::ostream& os, const HeatMatrix& heatMatrix) {
+    os << "HeatMatrix: " << heatMatrix.getNumberOfRows() << "x" << heatMatrix.getNumberOfCols() << std::endl;
+    for (int i = 0; i < heatMatrix.getNumberOfRows(); ++i) {
+        for (int j = 0; j < heatMatrix.getNumberOfCols(); ++j) {
+            os << heatMatrix[i][j] << " ";
+        }
+        os << std::endl;
+    }
+    return os;
 }

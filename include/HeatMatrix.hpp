@@ -1,6 +1,7 @@
 #ifndef HEATMATRIX_H
 #define HEATMATRIX_H
 
+#include <ostream>
 #include <vector>
 
 /**
@@ -19,6 +20,7 @@ class HeatMatrix {
     float getTempAt(int x, int y);
     float accumulateAllTemps() const;
     HeatMatrix getSliceOfMatrix(int divider, int processNumber);
+    static HeatMatrix collectMatricesAfterMPICalc(std::vector<HeatMatrix> heatMatrices);
 
     // Subscript operator for reading elements
     const std::vector<float> &operator[](int index) const;
@@ -26,11 +28,15 @@ class HeatMatrix {
     // Subscript operator for modifying elements
     std::vector<float> &operator[](int index);
 
+    bool operator==(const HeatMatrix& other) const;
+    friend std::ostream& operator<<(std::ostream& os, const HeatMatrix& heatMatrix);
+
     void swap(HeatMatrix &other);
     bool checkForConversion(HeatMatrix other, float conversionLimit,
                             bool parallelFlag);
-    int getNumberOfRows();
-    int getNumberOfCols();
+    const int getNumberOfRows() const;
+    const int getNumberOfCols() const;
+    std::vector<std::vector<float>> getMatrixData();
 
   private:
     /**
