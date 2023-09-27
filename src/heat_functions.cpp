@@ -32,6 +32,13 @@ float calculateNextTempOfTile(float tile, float up, float left, float right,
     float newTile = tile + heatTransferConstant * (right + left - 2 * tile) +
                     heatTransferConstant * (up + down - 2 * tile);
 
+    // Print the parameter values for debugging
+    /* std::cout << "tile: " << tile << std::endl; */
+    /* std::cout << "up: " << up << std::endl; */
+    /* std::cout << "left: " << left << std::endl; */
+    /* std::cout << "right: " << right << std::endl; */
+    /* std::cout << "down: " << down << std::endl; */
+    /* std::cout << "newTile: " << newTile << std::endl; */
     return newTile;
 }
 
@@ -44,7 +51,7 @@ float calculateNextTempOfTile(float tile, float up, float left, float right,
  * far side of the array
  */
 bool zeroOrRim(int value, int dimensions) {
-    return value <= 0 || value >= dimensions - 1;
+    return value <= 0 || value >= dimensions;
 }
 
 /**
@@ -67,30 +74,33 @@ bool calculateHeatMatrix(HeatMatrix &heatMatrix, HeatMatrix &tmpHeatMatrix,
                          int rows, int cols, float heatTransferConstant,
                          bool parallelFlag, float convergenceLimit) {
 
+    /* std::cout << "rows: " << rows << " cols: " << cols << std::endl; */
+    /* heatMatrix.printMatrix(); */
     /* auto start = high_resolution_clock::now(); */
 #pragma omp parallel if (parallelFlag)
     {
 #pragma omp for collapse(2)
-        for (int x = 0; x < rows; x++) {
-            for (int y = 0; y < cols; y++) {
-                float up = zeroOrRim(y + 1, cols) ? 0.0 : heatMatrix[x][y + 1];
+        for (int y = 0; y < rows; y++) {
+            for (int x = 0; x < cols; x++) {
+                float up = zeroOrRim(y - 1, rows) ? 0.0 : heatMatrix[y - 1][x];
                 float left =
-                    zeroOrRim(x - 1, rows) ? 0.0 : heatMatrix[x - 1][y];
+                    zeroOrRim(x - 1, cols) ? 0.0 : heatMatrix[y][x - 1];
                 float right =
-                    zeroOrRim(x + 1, rows) ? 0.0 : heatMatrix[x + 1][y];
+                    zeroOrRim(x + 1, cols) ? 0.0 : heatMatrix[y][x + 1];
                 float down =
-                    zeroOrRim(y - 1, cols) ? 0.0 : heatMatrix[x][y - 1];
-                float oldTile = heatMatrix[x][y];
+                    zeroOrRim(y + 1, rows) ? 0.0 : heatMatrix[y + 1][x];
+                float oldTile = heatMatrix[y][x];
                 float newTile = calculateNextTempOfTile(
                     oldTile, up, left, right, down, heatTransferConstant);
 
-                tmpHeatMatrix[x][y] = newTile;
+                tmpHeatMatrix[y][x] = newTile;
             }
         }
     }
 
     heatMatrix.swap(tmpHeatMatrix);
 
+    /* TODO: Put this to another method*/
     return heatMatrix.checkForConversion(tmpHeatMatrix, convergenceLimit,
                                          parallelFlag);
 }

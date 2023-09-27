@@ -108,9 +108,7 @@ const int HeatMatrix::getNumberOfCols() const { return matrixCols; }
  *
  * @return the vector data of the matrix
  */
-std::vector<std::vector<float>> HeatMatrix::getMatrixData() {
-    return matrix;
-}
+std::vector<std::vector<float>> HeatMatrix::getMatrixData() { return matrix; }
 
 /**
  * @brief Print the matrix to the console
@@ -143,14 +141,17 @@ HeatMatrix HeatMatrix::getSliceOfMatrix(int divider, int processNumber) {
  * @param[in] processNumber number of the process that wants the matrix slice
  * @return A slice of the matrix suited for mpi calculation
  */
-std::vector<std::vector<float>> HeatMatrix::getRawSliceOfMatrix(int divider, int processNumber) {
+std::vector<std::vector<float>>
+HeatMatrix::getRawSliceOfMatrix(int divider, int processNumber) {
 
     int rowsPerProcess = matrixRows / divider;
     // Either row 0 or the second to last row of the next block
-    auto startRow = std::max(processNumber * rowsPerProcess - 1, 0);
+    auto startRow =
+        processNumber == 0 ? 0 : (processNumber * rowsPerProcess - 1);
     // Eihter the last row or the second row of the next block
-    auto endRow =
-        std::min((processNumber + 1) * rowsPerProcess, matrixCols - 1);
+    auto endRow = divider - 1 == processNumber
+                      ? matrixCols - 1
+                      : (processNumber + 1) * rowsPerProcess;
 
     std::vector<std::vector<float>> newMatrixVector;
     for (int i = startRow; i <= endRow; i++) {
@@ -169,21 +170,23 @@ std::vector<std::vector<float>> HeatMatrix::getRawSliceOfMatrix(int divider, int
 }
 
 /**
- * @brief Take a vector of sliced up heatMatrices and put it back together into one heat matrix
+ * @brief Take a vector of sliced up heatMatrices and put it back together into
+ * one heat matrix
  *
  * @param[in] heatMatrices vector of sliced matrices
  * @return HeatMatrix thats put back together
  */
-HeatMatrix HeatMatrix::collectMatricesAfterMPICalc(std::vector<HeatMatrix> heatMatrices) {
+HeatMatrix
+HeatMatrix::collectMatricesAfterMPICalc(std::vector<HeatMatrix> heatMatrices) {
     std::vector<std::vector<std::vector<float>>> heatMatricesVectors;
 
     // Use std::transform to collect the data from the heatMatrices
-    std::transform(heatMatrices.begin(), heatMatrices.end(), std::back_inserter(heatMatricesVectors), 
-        [](const HeatMatrix& heatMatrix) {
-            return heatMatrix.matrix;
-        }
-    );
-    std::vector<std::vector<float>> collectedVectors = collectRawMatricesAfterMPICalc(heatMatricesVectors);
+    std::transform(
+        heatMatrices.begin(), heatMatrices.end(),
+        std::back_inserter(heatMatricesVectors),
+        [](const HeatMatrix &heatMatrix) { return heatMatrix.matrix; });
+    std::vector<std::vector<float>> collectedVectors =
+        collectRawMatricesAfterMPICalc(heatMatricesVectors);
 
     // Create a new Matrix from the vectors
     return HeatMatrix(collectedVectors);
@@ -194,7 +197,8 @@ HeatMatrix HeatMatrix::collectMatricesAfterMPICalc(std::vector<HeatMatrix> heatM
  *
  * @param[in] heatMatricesVectors collection of vectors
  */
-std::vector<std::vector<float>> HeatMatrix::collectRawMatricesAfterMPICalc(std::vector<std::vector<std::vector<float>>> heatMatricesVectors) {
+std::vector<std::vector<float>> HeatMatrix::collectRawMatricesAfterMPICalc(
+    std::vector<std::vector<std::vector<float>>> heatMatricesVectors) {
     std::vector<std::vector<float>> collectedVectors;
     collectedVectors.push_back(heatMatricesVectors[0][0]);
     for (int i = 0; i < heatMatricesVectors.size(); i++) {
@@ -203,7 +207,9 @@ std::vector<std::vector<float>> HeatMatrix::collectRawMatricesAfterMPICalc(std::
         }
     }
     int lastIndex = heatMatricesVectors.size() - 1;
-    collectedVectors.push_back(heatMatricesVectors[lastIndex][heatMatricesVectors[lastIndex].size() - 1]);
+    collectedVectors.push_back(
+        heatMatricesVectors[lastIndex]
+                           [heatMatricesVectors[lastIndex].size() - 1]);
 
     return collectedVectors;
 }
@@ -270,7 +276,7 @@ std::vector<float> &HeatMatrix::operator[](int index) { return matrix[index]; }
  */
 void HeatMatrix::swap(HeatMatrix &other) {
     if (matrixRows != other.matrixRows || matrixCols != other.matrixCols) {
-        throw std::invalid_argument("Matrices need to be of same size");
+        throw std::invalid_argument("Swap: Matrices need to be of same size");
     }
     std::swap(matrix, other.matrix);
 }
@@ -281,7 +287,7 @@ void HeatMatrix::swap(HeatMatrix &other) {
  * @param[in] other HeatMatrix to compore to
  * @return If the two matrices are equal or not
  */
-bool HeatMatrix::operator==(const HeatMatrix& other) const {
+bool HeatMatrix::operator==(const HeatMatrix &other) const {
     // Check if the dimensions match
     if (matrixRows != other.matrixRows || matrixCols != other.matrixCols) {
         return false;
@@ -298,11 +304,13 @@ bool HeatMatrix::operator==(const HeatMatrix& other) const {
 }
 
 /**
- * @brief Operator to be able to let google tests properly output the matrices if something goes wrong
+ * @brief Operator to be able to let google tests properly output the matrices
+ * if something goes wrong
  *
  */
-std::ostream& operator<<(std::ostream& os, const HeatMatrix& heatMatrix) {
-    os << "HeatMatrix: " << heatMatrix.getNumberOfRows() << "x" << heatMatrix.getNumberOfCols() << std::endl;
+std::ostream &operator<<(std::ostream &os, const HeatMatrix &heatMatrix) {
+    os << "HeatMatrix: " << heatMatrix.getNumberOfRows() << "x"
+       << heatMatrix.getNumberOfCols() << std::endl;
     for (int i = 0; i < heatMatrix.getNumberOfRows(); ++i) {
         for (int j = 0; j < heatMatrix.getNumberOfCols(); ++j) {
             os << heatMatrix[i][j] << " ";
