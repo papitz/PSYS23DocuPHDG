@@ -104,8 +104,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a86c93da14e81aa5d53c888a51b15221a"><td class="mdescLeft">&#160;</td><td class="mdescRight">accumulate all temperatures of the matrix  <a href="classHeatMatrix.html#a86c93da14e81aa5d53c888a51b15221a">More...</a><br /></td></tr>
 <tr class="separator:a86c93da14e81aa5d53c888a51b15221a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a91501b5eccbb128f200a46bb7ee82474"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classHeatMatrix.html">HeatMatrix</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHeatMatrix.html#a91501b5eccbb128f200a46bb7ee82474">getSliceOfMatrix</a> (int divider, int processNumber)</td></tr>
-<tr class="memdesc:a91501b5eccbb128f200a46bb7ee82474"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a slice of the matrix.  <a href="classHeatMatrix.html#a91501b5eccbb128f200a46bb7ee82474">More...</a><br /></td></tr>
+<tr class="memdesc:a91501b5eccbb128f200a46bb7ee82474"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a slice of the matrix as a new heatMatrix.  <a href="classHeatMatrix.html#a91501b5eccbb128f200a46bb7ee82474">More...</a><br /></td></tr>
 <tr class="separator:a91501b5eccbb128f200a46bb7ee82474"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0d28a3d4dc2c6b10dd89e1f8046b844"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; float &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHeatMatrix.html#af0d28a3d4dc2c6b10dd89e1f8046b844">getRawSliceOfMatrix</a> (int divider, int processNumber)</td></tr>
+<tr class="memdesc:af0d28a3d4dc2c6b10dd89e1f8046b844"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a raw data slice of the matrix.  <a href="classHeatMatrix.html#af0d28a3d4dc2c6b10dd89e1f8046b844">More...</a><br /></td></tr>
+<tr class="separator:af0d28a3d4dc2c6b10dd89e1f8046b844"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a44aaa55292aad2dbbd889726fa23c600"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; float &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHeatMatrix.html#a44aaa55292aad2dbbd889726fa23c600">operator[]</a> (int index) const</td></tr>
 <tr class="memdesc:a44aaa55292aad2dbbd889726fa23c600"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subscript operator implementation for reading elements.  <a href="classHeatMatrix.html#a44aaa55292aad2dbbd889726fa23c600">More...</a><br /></td></tr>
 <tr class="separator:a44aaa55292aad2dbbd889726fa23c600"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -134,7 +137,11 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:aabb0ea3f9d2f2793a8e6dc8d79986eed"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classHeatMatrix.html">HeatMatrix</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHeatMatrix.html#aabb0ea3f9d2f2793a8e6dc8d79986eed">collectMatricesAfterMPICalc</a> (std::vector&lt; <a class="el" href="classHeatMatrix.html">HeatMatrix</a> &gt; heatMatrices)</td></tr>
+<tr class="memdesc:aabb0ea3f9d2f2793a8e6dc8d79986eed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Take a vector of sliced up heatMatrices and put it back together into one heat matrix.  <a href="classHeatMatrix.html#aabb0ea3f9d2f2793a8e6dc8d79986eed">More...</a><br /></td></tr>
 <tr class="separator:aabb0ea3f9d2f2793a8e6dc8d79986eed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a015648c1b13b7b62001d8961444d0a18"><td class="memItemLeft" align="right" valign="top">static std::vector&lt; std::vector&lt; float &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHeatMatrix.html#a015648c1b13b7b62001d8961444d0a18">collectRawMatricesAfterMPICalc</a> (std::vector&lt; std::vector&lt; std::vector&lt; float &gt;&gt;&gt; heatMatricesVectors)</td></tr>
+<tr class="memdesc:a015648c1b13b7b62001d8961444d0a18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to collect sliced up vectors into one big vector.  <a href="classHeatMatrix.html#a015648c1b13b7b62001d8961444d0a18">More...</a><br /></td></tr>
+<tr class="separator:a015648c1b13b7b62001d8961444d0a18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
@@ -351,6 +358,49 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Take a vector of sliced up heatMatrices and put it back together into one heat matrix. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">heatMatrices</td><td>vector of sliced matrices </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classHeatMatrix.html" title="class that keeps all data to a heat matrix">HeatMatrix</a> thats put back together </dd></dl>
+
+</div>
+</div>
+<a id="a015648c1b13b7b62001d8961444d0a18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a015648c1b13b7b62001d8961444d0a18">&#9670;&nbsp;</a></span>collectRawMatricesAfterMPICalc()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::vector&lt; float &gt; &gt; HeatMatrix::collectRawMatricesAfterMPICalc </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; std::vector&lt; std::vector&lt; float &gt;&gt;&gt;&#160;</td>
+          <td class="paramname"><em>heatMatricesVectors</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Function to collect sliced up vectors into one big vector. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">heatMatricesVectors</td><td>collection of vectors </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a2cacbffd0d37057ea0be9f7e3e5a53ad"></a>
@@ -413,6 +463,44 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a id="af0d28a3d4dc2c6b10dd89e1f8046b844"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0d28a3d4dc2c6b10dd89e1f8046b844">&#9670;&nbsp;</a></span>getRawSliceOfMatrix()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::vector&lt; float &gt; &gt; HeatMatrix::getRawSliceOfMatrix </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>divider</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>processNumber</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get a raw data slice of the matrix. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">divider</td><td>number of processes by which to divide the matrix </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">processNumber</td><td>number of the process that wants the matrix slice </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A slice of the matrix suited for mpi calculation </dd></dl>
+
+</div>
+</div>
 <a id="a91501b5eccbb128f200a46bb7ee82474"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a91501b5eccbb128f200a46bb7ee82474">&#9670;&nbsp;</a></span>getSliceOfMatrix()</h2>
 
@@ -439,7 +527,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get a slice of the matrix. </p>
+<p>Get a slice of the matrix as a new heatMatrix. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">divider</td><td>number of processes by which to divide the matrix </td></tr>

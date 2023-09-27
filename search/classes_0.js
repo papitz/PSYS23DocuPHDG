@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['heatmatrix_43',['HeatMatrix',['../classHeatMatrix.html',1,'']]]
+  ['heatmatrix_45',['HeatMatrix',['../classHeatMatrix.html',1,'']]]
 ];
