@@ -20,7 +20,9 @@ class HeatMatrix {
     float getTempAt(int x, int y);
     float accumulateAllTemps() const;
     HeatMatrix getSliceOfMatrix(int divider, int processNumber);
+    std::vector<std::vector<float>> getRawSliceOfMatrix(int divider, int processNumber);
     static HeatMatrix collectMatricesAfterMPICalc(std::vector<HeatMatrix> heatMatrices);
+    static std::vector<std::vector<float>> collectRawMatricesAfterMPICalc(std::vector<std::vector<std::vector<float>>> heatMatricesVectors);
 
     // Subscript operator for reading elements
     const std::vector<float> &operator[](int index) const;

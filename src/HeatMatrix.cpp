@@ -126,13 +126,24 @@ void HeatMatrix::printMatrix() const {
 }
 
 /**
- * @brief Get a slice of the matrix
+ * @brief Get a slice of the matrix as a new heatMatrix
  *
  * @param[in] divider number of processes by which to divide the matrix
  * @param[in] processNumber number of the process that wants the matrix slice
  * @return A slice of the matrix suited for mpi calculation
  */
 HeatMatrix HeatMatrix::getSliceOfMatrix(int divider, int processNumber) {
+    return HeatMatrix(getRawSliceOfMatrix(divider, processNumber));
+}
+
+/**
+ * @brief Get a raw data slice of the matrix
+ *
+ * @param[in] divider number of processes by which to divide the matrix
+ * @param[in] processNumber number of the process that wants the matrix slice
+ * @return A slice of the matrix suited for mpi calculation
+ */
+std::vector<std::vector<float>> HeatMatrix::getRawSliceOfMatrix(int divider, int processNumber) {
 
     int rowsPerProcess = matrixRows / divider;
     // Either row 0 or the second to last row of the next block
@@ -141,9 +152,9 @@ HeatMatrix HeatMatrix::getSliceOfMatrix(int divider, int processNumber) {
     auto endRow =
         std::min((processNumber + 1) * rowsPerProcess, matrixCols - 1);
 
-    std::vector<std::vector<float>> newMatrix;
+    std::vector<std::vector<float>> newMatrixVector;
     for (int i = startRow; i <= endRow; i++) {
-        newMatrix.push_back(std::vector(matrix[i]));
+        newMatrixVector.push_back(std::vector(matrix[i]));
     }
 
     // Print the matrix for debuggging
@@ -154,21 +165,47 @@ HeatMatrix HeatMatrix::getSliceOfMatrix(int divider, int processNumber) {
     /*     std::cout << std::endl; */
     /* } */
 
-    return HeatMatrix(newMatrix);
+    return newMatrixVector;
 }
 
+/**
+ * @brief Take a vector of sliced up heatMatrices and put it back together into one heat matrix
+ *
+ * @param[in] heatMatrices vector of sliced matrices
+ * @return HeatMatrix thats put back together
+ */
 HeatMatrix HeatMatrix::collectMatricesAfterMPICalc(std::vector<HeatMatrix> heatMatrices) {
+    std::vector<std::vector<std::vector<float>>> heatMatricesVectors;
+
+    // Use std::transform to collect the data from the heatMatrices
+    std::transform(heatMatrices.begin(), heatMatrices.end(), std::back_inserter(heatMatricesVectors), 
+        [](const HeatMatrix& heatMatrix) {
+            return heatMatrix.matrix;
+        }
+    );
+    std::vector<std::vector<float>> collectedVectors = collectRawMatricesAfterMPICalc(heatMatricesVectors);
+
+    // Create a new Matrix from the vectors
+    return HeatMatrix(collectedVectors);
+}
+
+/**
+ * @brief Function to collect sliced up vectors into one big vector
+ *
+ * @param[in] heatMatricesVectors collection of vectors
+ */
+std::vector<std::vector<float>> HeatMatrix::collectRawMatricesAfterMPICalc(std::vector<std::vector<std::vector<float>>> heatMatricesVectors) {
     std::vector<std::vector<float>> collectedVectors;
-    collectedVectors.push_back(heatMatrices[0].getMatrixData()[0]);
-    for (int i = 0; i < heatMatrices.size(); i++) {
-        for (int row = 1; row < heatMatrices[i].getNumberOfRows() - 1; row++) {
-            collectedVectors.push_back(heatMatrices[i].getMatrixData()[row]);
+    collectedVectors.push_back(heatMatricesVectors[0][0]);
+    for (int i = 0; i < heatMatricesVectors.size(); i++) {
+        for (int row = 1; row < heatMatricesVectors[i].size() - 1; row++) {
+            collectedVectors.push_back(heatMatricesVectors[i][row]);
         }
     }
-    int lastIndex = heatMatrices.size() - 1;
-    collectedVectors.push_back(heatMatrices[lastIndex].getMatrixData()[heatMatrices[lastIndex].getNumberOfRows() - 1]);
+    int lastIndex = heatMatricesVectors.size() - 1;
+    collectedVectors.push_back(heatMatricesVectors[lastIndex][heatMatricesVectors[lastIndex].size() - 1]);
 
-    return HeatMatrix(collectedVectors);
+    return collectedVectors;
 }
 
 /**
