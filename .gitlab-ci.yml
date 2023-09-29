@@ -1,7 +1,40 @@
-image: papitz/psys-runner:latest
+# image: papitz/psys-runner:latest
+#
+# build:
+#   stage: build
+#   tags: [Linux]
+#   script:
+#     - mkdir build
+#     - cmake -S . -B build
+#     - cmake --build build
+#
+#   artifacts:
+#     paths:
+#       - build/HeatMatrix
+#
+# ctest:
+#   stage: test
+#   script:
+#     - cd test
+#     - cmake .
+#     - cmake --build .
+#     - ./t_HeatMatrix --gtest_output="xml:unittestResults.xml"
+#   tags: [Linux]
+#   artifacts:
+#     paths:
+#       - test/unittestResults.xml
+#     reports:
+#       junit: test/unittestResults.xml
+.alpine_cmake_test: &alpine_cmake_test
+  image: alpine
+  before_script:
+    - apk update
+    - apk add cmake make g++ git opencv-dev libgomp
+    - apk add valgrind
 
 build:
   stage: build
+  <<: *alpine_cmake_test
   tags: [Linux]
   script:
     - mkdir build
@@ -12,8 +45,9 @@ build:
     paths:
       - build/HeatMatrix
 
-ctest:
+gtest:
   stage: test
+  <<: *alpine_cmake_test
   script:
     - cd test
     - cmake .
@@ -25,3 +59,12 @@ ctest:
       - test/unittestResults.xml
     reports:
       junit: test/unittestResults.xml
+
+memcheck:
+  stage: test
+  <<: *alpine_cmake_test
+  script:
+    - cd build
+    - valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --show-error-list=yes ./HeatMatrix
+    - valgrind --tool=helgrind -s ./HeatMatrix 100 100 1500.0 100 0.025 0.1 1 4 0
+  tags: [Linux]

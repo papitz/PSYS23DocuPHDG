@@ -37,11 +37,11 @@ int videoFrameModulo = 10;
  * @brief set all values from the parameter list.
  * The order is like this if you use it without a file: ROWS(int) COLS(int) STARTING_HEAT(float)
  * NUMBER_OF_STEPS(int) HEAT_TRANSFER_CONSTANT(float) CONVERGENCE_LIMIT(float)
- * PARALLEL_FLAG(0 or 1) NUMBER_OF_THREADS(int)
+ * PARALLEL_FLAG(0 or 1) NUMBER_OF_THREADS(int) VIDEO_FLAG(0 or 1)
  *
  * The order is like this if you use it WITH a file: FILENAME(file)
  * NUMBER_OF_STEPS(int) HEAT_TRANSFER_CONSTANT(float) CONVERGENCE_LIMIT(float)
- * PARALLEL_FLAG(0 or 1) NUMBER_OF_THREADS(int)
+ * PARALLEL_FLAG(0 or 1) NUMBER_OF_THREADS(int) VIDEO_FLAG(0 or 1)
  *
  * @param argc Number of arguments
  * @param argv parameter list
