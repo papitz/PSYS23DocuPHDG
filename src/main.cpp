@@ -7,24 +7,26 @@
 #include <opencv2/videoio.hpp>
 #include <stdio.h>
 #include <string>
+#include <vector>
 using namespace std::chrono;
 
 using namespace cv;
 using namespace std;
 using namespace heatFunctions;
 
-using namespace cv;
-using namespace std;
-
 // Initialize globally with default values
-int rows = 100;
-int cols = 100;
+int matrixRows = 100;
+int matrixCols = 100;
 int maxNumberOfSteps = 1000;
 float startingHeat = 15000.0;
 float heatTransferConstant = 0.025;
 float convergenceLimit = 0.01;
 bool parallelFlag = false;
 int numberOfThreads = 20;
+bool createVideoFlag = false;
+
+// Which frame we will save. If its 10 we save every thenth matrix
+int videoFrameModulo = 10;
 
 /**
  * @brief set all values from the parameter list.
@@ -43,38 +45,42 @@ void setValuesFromParams(int argc, char *argv[]) {
         return;
     }
 
-    rows = stoi(argv[1]);
-    cols = stoi(argv[2]);
+    matrixRows = stoi(argv[1]);
+    matrixCols = stoi(argv[2]);
     maxNumberOfSteps = stoi(argv[3]);
     startingHeat = stof(argv[4]);
     heatTransferConstant = stof(argv[5]);
     convergenceLimit = stof(argv[6]);
     parallelFlag = (bool)stoi(argv[7]);
     numberOfThreads = stoi(argv[8]);
+    createVideoFlag = (bool)stoi(argv[9]);
+
 
     printf("Successfully set values from command line!\n");
-    printf("Rows: %d\n", rows);
-    printf("Cols: %d\n", cols);
+    printf("Rows: %d\n", matrixRows);
+    printf("Cols: %d\n", matrixCols);
     printf("maxNumberOfSteps: %d\n", maxNumberOfSteps);
     printf("startingHeat: %f\n", startingHeat);
     printf("heatTransferConstant: %f\n", heatTransferConstant);
     printf("convergenceLimit: %f\n", convergenceLimit);
     printf("parallelFlag: %d\n", parallelFlag);
     printf("numberOfThreads: %d\n", numberOfThreads);
+    printf("createVideoFlag: %d\n", createVideoFlag);
 }
 
-void createVideo(float **storedMatrices[], int numberOfSteps) {
+void createVideo(vector<vector<vector<float>>> storedMatrices, float maxTemp) {
     cv::VideoWriter videoWriter;
-    videoWriter.open("stored_matrices.avi",
+    videoWriter.open("stored_matrices_new.avi",
                      cv::VideoWriter::fourcc('M', 'J', 'P', 'G'), 10,
-                     cv::Size(cols, rows));
+                     cv::Size(matrixCols, matrixRows));
 
-    for (int i = 0; i < numberOfSteps; i++) {
-        cv::Mat matrix(rows, cols, CV_8UC3);
-        for (int j = 0; j < rows; ++j) {
-            for (int k = 0; k < cols; ++k) {
-                cv::Vec3b &pixel = matrix.at<cv::Vec3b>(i, j);
-                setColorForTemperature(storedMatrices[i][j][k], pixel);
+    std::cout << "Size of mat " << storedMatrices.size() << std::endl;
+    for (int i = 0; i < storedMatrices.size(); i++) {
+        cv::Mat matrix(matrixRows, matrixCols, CV_8UC3);
+        for (int j = 0; j < matrixRows; ++j) {
+            for (int k = 0; k < matrixCols; ++k) {
+                cv::Vec3b &pixel = matrix.at<cv::Vec3b>(j, k);
+                setColorForTemperature(storedMatrices[i][j][k], maxTemp,  pixel);
             }
         }
         videoWriter.write(matrix);
@@ -94,13 +100,13 @@ int main(int argc, char *argv[]) {
     setValuesFromParams(argc, argv);
     omp_set_num_threads(numberOfThreads);
 
-    /* float ***storedMatrices = new float **[maxNumberOfSteps]; */
+    vector<vector<vector<float>>> storedMatrices;
 
-    HeatMatrix heatMatrix = HeatMatrix(rows, cols);
+    HeatMatrix heatMatrix = HeatMatrix(matrixRows, matrixCols);
     
-    heatMatrix.setTempAt(rows / 2, cols / 2 , startingHeat);
+    heatMatrix.setTempAt(matrixRows / 2, matrixCols / 2 , startingHeat);
 
-    HeatMatrix tmpHeatMatrix = HeatMatrix(rows, cols);
+    HeatMatrix tmpHeatMatrix = HeatMatrix(matrixRows, matrixCols);
 
     int convergedAfterSteps = maxNumberOfSteps;
     bool converged = false;
@@ -113,13 +119,13 @@ int main(int argc, char *argv[]) {
             printf("Step %d\n", i);
         }
 
-        converged = calculateHeatMatrix(heatMatrix, tmpHeatMatrix, rows, cols,
+        converged = calculateHeatMatrix(heatMatrix, tmpHeatMatrix, matrixRows, matrixCols,
                                         heatTransferConstant, parallelFlag,
                                         convergenceLimit);
 
-
-        // Store the new matrix in storedMatrices
-        /* storedMatrices[i] = newMatrix; */
+        if (createVideoFlag && i % videoFrameModulo == 0) {
+            storedMatrices.push_back(heatMatrix.getMatrixData());
+        }
 
         if (converged) {
             printf("Converged after %d iterations\n", i);
@@ -133,7 +139,7 @@ int main(int argc, char *argv[]) {
     printf("Took %li ms\n", duration.count());
     /* heatMatrix.printMatrix(); */
 
-    /* createVideo(storedMatrices, convergedAfterSteps); */
+    createVideo(storedMatrices, startingHeat);
 
     return 0;
 }

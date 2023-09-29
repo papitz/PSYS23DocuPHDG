@@ -130,8 +130,10 @@ void calculateHeatMatrixInnerFunction(HeatMatrix &heatMatrix, HeatMatrix &tmpHea
  * @param[in] temperature Temperature to set the corresponding color to
  * @param[out] pixel Pixel that will get set
  */
-void setColorForTemperature(float temperature, cv::Vec3b &pixel) {
-    switch ((int)(temperature / 75)) {
+void setColorForTemperature(float temperature, float maxTemp, cv::Vec3b &pixel) {
+    // Changes at what point temperatures will appear as black. Change this to your liking depending on the video you want
+    int temperatureResolution = 10000;
+    switch ((int)(temperature / maxTemp * temperatureResolution)) {
     case 0:
         pixel[0] = 0;
         pixel[1] = 0;

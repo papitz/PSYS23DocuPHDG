@@ -7,10 +7,54 @@
 #include <vector>
 
 using namespace heatFunctions;
+using namespace std;
+
+
+// Initialize globally with default values
+int matrixRows = 100;
+int matrixCols = 100;
+int maxNumberOfSteps = 1000;
+float startingHeat = 15000.0;
+float heatTransferConstant = 0.025;
+float convergenceLimit = 0.01;
+bool parallelFlag = false;
+int numberOfThreads = 20;
+
+/**
+ * @brief set all values from the parameter list.
+ * For now the order is like this: ROWS(int) COLS(int) NUMBER_OF_STEPS(int)
+ * STARTING_HEAT(float) HEAT_TRANSFER_CONSTANT(float) CONVERGENCE_LIMIT(float)
+ *
+ *
+ * @param argc Number of arguments
+ * @param argv parameter list
+ */
+void setValuesFromParams(int argc, char *argv[]) {
+    // Return if we dont have all arguments
+    if (argc < 7) {
+        printf("Not enough arguments provided. Defaults are used\n");
+        return;
+    }
+
+    matrixRows = stoi(argv[1]);
+    matrixCols = stoi(argv[2]);
+    maxNumberOfSteps = stoi(argv[3]);
+    startingHeat = stof(argv[4]);
+    heatTransferConstant = stof(argv[5]);
+    convergenceLimit = stof(argv[6]);
+
+    printf("Successfully set values from command line!\n");
+    printf("Rows: %d\n", matrixRows);
+    printf("Cols: %d\n", matrixCols);
+    printf("maxNumberOfSteps: %d\n", maxNumberOfSteps);
+    printf("startingHeat: %f\n", startingHeat);
+    printf("heatTransferConstant: %f\n", heatTransferConstant);
+    printf("convergenceLimit: %f\n", convergenceLimit);
+}
 
 int main(int argc, char **argv) {
-    int matrixRows = 5000;
-    int matrixCols = 5000;
+
+    setValuesFromParams(argc, argv);
 
     MPI_Init(&argc, &argv);
 
@@ -36,8 +80,7 @@ int main(int argc, char **argv) {
     // original matrix
     HeatMatrix originalMatrix(matrixRows, matrixCols);
     HeatMatrix finalMatrix(originalMatrix);
-    originalMatrix.setTempAt(2500, 2500, 15000.0);
-    float conversionLimit = 0.1;
+    originalMatrix.setTempAt(matrixRows / 2, matrixCols / 2, startingHeat);
 
     int iterations = 0;
     bool notConverged = true;
@@ -89,9 +132,8 @@ int main(int argc, char **argv) {
              * hm.getNumberOfRows() */
             /*           << " cols: " << hm.getNumberOfCols() << "\n"; */
             /* std::cout << "rank: " << rank << " before\n"; */
-            /* TODO: Proper data here */
             calculateHeatMatrixInnerFunction(hm, tmpHM, hm.getNumberOfRows(),
-                                hm.getNumberOfCols(), 0.025f, 0, 1.0f, 1);
+                                hm.getNumberOfCols(), heatTransferConstant, false, convergenceLimit, 1);
             /* std::cout << "rank: " << rank << " after\n"; */
             /* hm.printMatrix(); */
 
@@ -117,9 +159,9 @@ int main(int argc, char **argv) {
             HeatMatrix tmpMatrix(firstSlice.getNumberOfRows(),
                                  firstSlice.getNumberOfCols());
 
-            calculateHeatMatrix(firstSlice, tmpMatrix,
+            calculateHeatMatrixInnerFunction(firstSlice, tmpMatrix,
                                 firstSlice.getNumberOfRows(),
-                                firstSlice.getNumberOfCols(), 0.025f, 0, 1.0f);
+                                firstSlice.getNumberOfCols(), heatTransferConstant, false, convergenceLimit, 0);
 
             receivedSlices.push_back(firstSlice);
 
@@ -156,12 +198,17 @@ int main(int argc, char **argv) {
             finalMatrix.swap(originalMatrix);
 
             notConverged = (!originalMatrix.checkForConversion(
-                finalMatrix, conversionLimit, false));
+                finalMatrix, convergenceLimit, false));
 
         }
         iterations++;
+
         MPI_Bcast(&notConverged, 1, MPI_CXX_BOOL, 0, MPI_COMM_WORLD);
         MPI_Barrier(MPI_COMM_WORLD);
+        // Stop if we are over the max number of steps
+        if (iterations > maxNumberOfSteps) {
+            break;
+        }
     }
 
     stop = std::chrono::high_resolution_clock::now();

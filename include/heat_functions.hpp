@@ -20,6 +20,6 @@ void calculateHeatMatrixInnerFunction(HeatMatrix &heatMatrix,
                                       bool parallelFlag, float convergenceLimit,
                                       int offset);
 bool outOfMatrixBounds(int value, int dimensions);
-void setColorForTemperature(float temperature, cv::Vec3b &pixel);
+void setColorForTemperature(float temperature, float maxTemp, cv::Vec3b &pixel);
 } // namespace heatFunctions
 #endif // HEAT_FUNCTIONS_
