@@ -1,6 +1,7 @@
 #include "../include/HeatMatrix.hpp"
 #include "../include/heat_functions.hpp"
 #include <cstdio>
+#include <chrono>
 #include <iostream>
 #include <mpi.h>
 #include <vector>
@@ -8,8 +9,8 @@
 using namespace heatFunctions;
 
 int main(int argc, char **argv) {
-    int matrixRows = 10;
-    int matrixCols = 10;
+    int matrixRows = 5000;
+    int matrixCols = 5000;
 
     MPI_Init(&argc, &argv);
 
@@ -35,18 +36,21 @@ int main(int argc, char **argv) {
     // original matrix
     HeatMatrix originalMatrix(matrixRows, matrixCols);
     HeatMatrix finalMatrix(originalMatrix);
-    originalMatrix.setTempAt(9, 5, 1200.0);
-    float conversionLimit = 1.0;
+    originalMatrix.setTempAt(2500, 2500, 15000.0);
+    float conversionLimit = 0.1;
 
     int iterations = 0;
     bool notConverged = true;
+
+    auto stop = std::chrono::high_resolution_clock::now();
+    auto start = std::chrono::high_resolution_clock::now();
     while (notConverged) {
 
         if (rank == 0) {
             // Split the original matrix into slices and send them to other
             // processes
             for (int dest = 1; dest < num_processes; ++dest) {
-                std::cout << dest << originalMatrix.getSliceOfMatrix(num_processes, dest) << std::endl;
+                /* std::cout << dest << originalMatrix.getSliceOfMatrix(num_processes, dest) << std::endl; */
                 std::vector<std::vector<float>> slice =
                     originalMatrix.getRawSliceOfMatrix(num_processes, dest);
                 int dataSize = slice.size();
@@ -86,8 +90,8 @@ int main(int argc, char **argv) {
             /*           << " cols: " << hm.getNumberOfCols() << "\n"; */
             /* std::cout << "rank: " << rank << " before\n"; */
             /* TODO: Proper data here */
-            calculateHeatMatrix(hm, tmpHM, hm.getNumberOfRows(),
-                                hm.getNumberOfCols(), 0.025f, 0, 1.0f);
+            calculateHeatMatrixInnerFunction(hm, tmpHM, hm.getNumberOfRows(),
+                                hm.getNumberOfCols(), 0.025f, 0, 1.0f, 1);
             /* std::cout << "rank: " << rank << " after\n"; */
             /* hm.printMatrix(); */
 
@@ -147,8 +151,8 @@ int main(int argc, char **argv) {
             // Combine the received slices into the final matrix
             HeatMatrix finalMatrix =
                 HeatMatrix::collectMatricesAfterMPICalc(receivedSlices);
-            std::cout << "originalMatrix: \n" << originalMatrix;
-            std::cout << "finalMatrix: \n" << finalMatrix;
+            /* std::cout << "originalMatrix: \n" << originalMatrix; */
+            /* std::cout << "finalMatrix: \n" << finalMatrix; */
             finalMatrix.swap(originalMatrix);
 
             notConverged = (!originalMatrix.checkForConversion(
@@ -160,9 +164,14 @@ int main(int argc, char **argv) {
         MPI_Barrier(MPI_COMM_WORLD);
     }
 
+    stop = std::chrono::high_resolution_clock::now();
+
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
+    printf("Took %li ms\n", duration.count());
+
     if (rank == 0) {
         std::cout << "final after " << iterations << " iterations\n";
-        originalMatrix.printMatrix();
+        /* originalMatrix.printMatrix(); */
     }
 
     MPI_Finalize();

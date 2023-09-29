@@ -23,12 +23,12 @@ TEST(HeatFunctionsTest, ZeroOrRim) {
     int dimensions = 5;
 
     // Test values on the rim
-    ASSERT_TRUE(zeroOrRim(0, dimensions));
-    ASSERT_TRUE(zeroOrRim(4, dimensions));
+    ASSERT_TRUE(outOfMatrixBounds(-1, dimensions));
+    ASSERT_TRUE(outOfMatrixBounds(5, dimensions));
 
     // Test values inside the rim
-    ASSERT_FALSE(zeroOrRim(1, dimensions));
-    ASSERT_FALSE(zeroOrRim(3, dimensions));
+    ASSERT_FALSE(outOfMatrixBounds(1, dimensions));
+    ASSERT_FALSE(outOfMatrixBounds(3, dimensions));
 }
 
 // Test calculateHeatMatrix function
