@@ -9,10 +9,16 @@ install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
 _deps
-html
+# html
 latex
 HeatMatrix
 build
 .vscode
 .cmake/api/v1/reply
 *.avi
+test/lib
+test/t_HeatMatrix[1]_include.cmake
+test/t_HeatMatrix[1]_tests.cmake
+test/t_HeatMatrix[1]_include.cmake
+test/test_results.xml
+test/t_HeatMatrix[1]_include.cmake

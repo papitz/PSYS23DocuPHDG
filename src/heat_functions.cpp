@@ -1,65 +1,109 @@
+#include "../include/heat_functions.hpp"
+#include <chrono>
+#include <cmath>
+#include <omp.h>
 #include <opencv2/opencv.hpp>
 #include <stdio.h>
-#include "../include/heat_functions.hpp"
 
 using namespace cv;
 using namespace std;
+using namespace std::chrono;
 
 namespace heatFunctions {
 
 using namespace cv;
 using namespace std;
 
+/**
+ * @brief calculate the temperature of the tile based on its neighbors
+ *
+ * @param[in,out] tile value of the tile to calculate
+ * @param[in] up neighbor
+ * @param[in] left neighbor
+ * @param[in] right neighbor
+ * @param[in] down neighbor
+ * @param[in] heatTransferConstant constant that decides how much heat is
+ * transfered
+ * @return new temp of the tile
+ */
 float calculateNextTempOfTile(float tile, float up, float left, float right,
-                              float down) {
-    const float HEAT_TRANSFER_CONST = 0.025;
+                              float down, float heatTransferConstant) {
 
-    float newTile = tile + HEAT_TRANSFER_CONST * (right + left - 2 * tile) +
-                    HEAT_TRANSFER_CONST * (up + down - 2 * tile);
+    float newTile = tile + heatTransferConstant * (right + left - 2 * tile) +
+                    heatTransferConstant * (up + down - 2 * tile);
 
     return newTile;
 }
 
+/**
+ * @brief Check if a value is on the rim of the matrix
+ *
+ * @param[in] value location of the value
+ * @param[in] dimensions dimension of the array
+ * @return boolean that shows if the value is either zero or smaller or on the
+ * far side of the array
+ */
 bool zeroOrRim(int value, int dimensions) {
     return value <= 0 || value >= dimensions;
 }
 
-bool calculateHeatMatrix(float **heatMatrix, float **updatedHeatMatrix,
-                         int rows, int cols) {
-    bool converged = true;
+/**
+ * @brief calculate the next step of the heatMatrix
+ *
+ * @param[in,out] heatMatrix heatMatrix that goes in
+ * @param[in,out] tmpHeatMatrix second heatMatrix so we can check for
+ * Convergence
+ * @param[in] rows amount of rows
+ * @param[in] cols amount of cols
+ * @param[in] heatTransferConstant constant that decides how much heat is
+ * transfered
+ * @param[in] parallelFlag flag that decides if things are calculated in
+ * parallel or not
+ * @param[in] convergenceLimit limit at which delta of temp we count the matrix
+ * as converged
+ * @return if matrix is converged or not
+ */
+bool calculateHeatMatrix(HeatMatrix &heatMatrix, HeatMatrix &tmpHeatMatrix,
+                         int rows, int cols, float heatTransferConstant,
+                         bool parallelFlag, float convergenceLimit) {
 
-    for (int x = 0; x < rows; x++) {
-        for (int y = 0; y < cols; y++) {
-            float up = zeroOrRim(y + 1, cols) ? 0.0 : heatMatrix[x][y + 1];
-            float left = zeroOrRim(x - 1, rows) ? 0.0 : heatMatrix[x - 1][y];
-            float right = zeroOrRim(x + 1, rows) ? 0.0 : heatMatrix[x + 1][y];
-            float down = zeroOrRim(y - 1, cols) ? 0.0 : heatMatrix[x][y - 1];
-            float oldTile = heatMatrix[x][y];
-            float newTile =
-                calculateNextTempOfTile(oldTile, up, left, right, down);
+    /* std::cout << "rows: " << rows << " cols: " << cols << std::endl; */
+    /* heatMatrix.printMatrix(); */
+    /* auto start = high_resolution_clock::now(); */
+#pragma omp parallel if (parallelFlag)
+    {
+#pragma omp for collapse(2)
+        for (int y = 0; y < rows; y++) {
+            for (int x = 0; x < cols; x++) {
+                float up = zeroOrRim(y - 1, rows) ? 0.0 : heatMatrix[y - 1][x];
+                float left =
+                    zeroOrRim(x - 1, cols) ? 0.0 : heatMatrix[y][x - 1];
+                float right =
+                    zeroOrRim(x + 1, cols) ? 0.0 : heatMatrix[y][x + 1];
+                float down =
+                    zeroOrRim(y + 1, rows) ? 0.0 : heatMatrix[y + 1][x];
+                float oldTile = heatMatrix[y][x];
+                float newTile = calculateNextTempOfTile(
+                    oldTile, up, left, right, down, heatTransferConstant);
 
-            updatedHeatMatrix[x][y] = newTile;
-
-            converged = checkForConversion(converged, newTile, oldTile);
+                tmpHeatMatrix[y][x] = newTile;
+            }
         }
     }
-    // Update the heat matrix
-    for (int i = 0; i < rows; i++) {
-        heatMatrix[i] = new float[cols];
-        for (int j = 0; j < cols; j++) {
-            heatMatrix[i][j] = updatedHeatMatrix[i][j];
-        }
-    }
-    return converged;
+
+    heatMatrix.swap(tmpHeatMatrix);
+
+    /* TODO: Put this to another method*/
+    return heatMatrix.checkForConversion(tmpHeatMatrix, convergenceLimit,
+                                         parallelFlag);
 }
 
-bool checkForConversion(bool converged, float newTile, float oldTile) {
-    if (converged && (newTile - oldTile < -0.1 || newTile - oldTile > 0.1)) {
-        converged = false;
-    }
-    return converged;
-}
-
+/**
+ * @brief calculate a color depending on the temp of a tile
+ *
+ * @param[in] temperature Temperature to set the corresponding color to
+ * @param[out] pixel Pixel that will get set
+ */
 void setColorForTemperature(float temperature, cv::Vec3b &pixel) {
     switch ((int)(temperature / 75)) {
     case 0:
@@ -88,4 +132,4 @@ void setColorForTemperature(float temperature, cv::Vec3b &pixel) {
         pixel[2] = 255;
     }
 }
-}
+} // namespace heatFunctions

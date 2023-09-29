@@ -1,11 +1,19 @@
-cmake_minimum_required(VERSION 3.18.4)
-project(HeatMatrix)
-find_package(OpenCV REQUIRED)
+cmake_minimum_required(VERSION 3.16.3)
+project(HeatMatrix CXX)
+
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+find_package(OpenCV REQUIRED)
+find_package(OpenMP REQUIRED)
+
 include_directories(${OpenCV_INCLUDE_DIRS} include)
-# target_include_directories(include)
-# Add the source files to the project
-set(SOURCES src/main.cpp src/heat_functions.cpp include/heat_functions.hpp)
+
+file(GLOB_RECURSE SOURCES "include/*.hpp" "src/*.cpp")
 add_executable(${PROJECT_NAME} ${SOURCES})
-target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS})
-add_compile_options(-o3)
+if(OpenMP_CXX_FOUND)
+  target_link_libraries(${PROJECT_NAME} PUBLIC OpenMP::OpenMP_CXX
+                                               ${OpenCV_LIBS})
+endif()
+set(CMAKE_CXX_FLAGS "-O0")
+set(CMAKE_C_FLAGS "-O0")

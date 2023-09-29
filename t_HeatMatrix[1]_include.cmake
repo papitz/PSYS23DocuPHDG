@@ -1,0 +1,5 @@
+if(EXISTS "/home/paul/Uni/PSYS/psys23-Belegarbeit-DennisGottfried-PaulHoeppner/t_HeatMatrix[1]_tests.cmake")
+  include("/home/paul/Uni/PSYS/psys23-Belegarbeit-DennisGottfried-PaulHoeppner/t_HeatMatrix[1]_tests.cmake")
+else()
+  add_test(t_HeatMatrix_NOT_BUILT t_HeatMatrix_NOT_BUILT)
+endif()

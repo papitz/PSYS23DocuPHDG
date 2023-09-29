@@ -1,13 +1,27 @@
-image: debian:bullseye
+image: papitz/psys-runner:latest
+
 build:
-    stage: build
-    tags: [Linux]
-    before_script:
-        - apt-get update
-        - apt-get install -y build-essential cmake
-        - apt-get install -y libopencv-dev
-    script:
-        - mkdir build
-        - cd build
-        - cmake ..
-        - make
+  stage: build
+  tags: [Linux]
+  script:
+    - mkdir build
+    - cmake -S . -B build
+    - cmake --build build
+
+  artifacts:
+    paths:
+      - build/HeatMatrix
+
+ctest:
+  stage: test
+  script:
+    - cd test
+    - cmake .
+    - cmake --build .
+    - ./t_HeatMatrix --gtest_output="xml:unittestResults.xml"
+  tags: [Linux]
+  artifacts:
+    paths:
+      - test/unittestResults.xml
+    reports:
+      junit: test/unittestResults.xml
