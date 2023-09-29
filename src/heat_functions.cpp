@@ -43,8 +43,8 @@ float calculateNextTempOfTile(float tile, float up, float left, float right,
  * @return boolean that shows if the value is either zero or smaller or on the
  * far side of the array
  */
-bool zeroOrRim(int value, int dimensions) {
-    return value <= 0 || value >= dimensions;
+bool outOfMatrixBounds(int value, int dimensions) {
+    return value < 0 || value >= dimensions;
 }
 
 /**
@@ -70,18 +70,48 @@ bool calculateHeatMatrix(HeatMatrix &heatMatrix, HeatMatrix &tmpHeatMatrix,
     /* std::cout << "rows: " << rows << " cols: " << cols << std::endl; */
     /* heatMatrix.printMatrix(); */
     /* auto start = high_resolution_clock::now(); */
+    calculateHeatMatrixInnerFunction(heatMatrix, tmpHeatMatrix, rows, cols, heatTransferConstant, parallelFlag, convergenceLimit, 0);
+
+    return heatMatrix.checkForConversion(tmpHeatMatrix, convergenceLimit,
+                                         parallelFlag);
+}
+
+/**
+ * @brief calculate the next step of the heatMatrix
+ *
+ * @param[in,out] heatMatrix heatMatrix that goes in
+ * @param[in,out] tmpHeatMatrix second heatMatrix so we can check for
+ * Convergence
+ * @param[in] rows amount of rows
+ * @param[in] cols amount of cols
+ * @param[in] heatTransferConstant constant that decides how much heat is
+ * transfered
+ * @param[in] parallelFlag flag that decides if things are calculated in
+ * parallel or not
+ * @param[in] convergenceLimit limit at which delta of temp we count the matrix
+ * as converged
+ * @param[in] offset how many rows to skip at top and bottom
+ * @return if matrix is converged or not
+ */
+void calculateHeatMatrixInnerFunction(HeatMatrix &heatMatrix, HeatMatrix &tmpHeatMatrix,
+                         int rows, int cols, float heatTransferConstant,
+                         bool parallelFlag, float convergenceLimit, int offset) {
+
+    /* std::cout << "rows: " << rows << " cols: " << cols << std::endl; */
+    /* heatMatrix.printMatrix(); */
+    /* auto start = high_resolution_clock::now(); */
 #pragma omp parallel if (parallelFlag)
     {
 #pragma omp for collapse(2)
-        for (int y = 0; y < rows; y++) {
+        for (int y = 0 + offset; y < rows -  offset; y++) {
             for (int x = 0; x < cols; x++) {
-                float up = zeroOrRim(y - 1, rows) ? 0.0 : heatMatrix[y - 1][x];
+                float up = outOfMatrixBounds(y - 1, rows) ? 0.0 : heatMatrix[y - 1][x];
                 float left =
-                    zeroOrRim(x - 1, cols) ? 0.0 : heatMatrix[y][x - 1];
+                    outOfMatrixBounds(x - 1, cols) ? 0.0 : heatMatrix[y][x - 1];
                 float right =
-                    zeroOrRim(x + 1, cols) ? 0.0 : heatMatrix[y][x + 1];
+                    outOfMatrixBounds(x + 1, cols) ? 0.0 : heatMatrix[y][x + 1];
                 float down =
-                    zeroOrRim(y + 1, rows) ? 0.0 : heatMatrix[y + 1][x];
+                    outOfMatrixBounds(y + 1, rows) ? 0.0 : heatMatrix[y + 1][x];
                 float oldTile = heatMatrix[y][x];
                 float newTile = calculateNextTempOfTile(
                     oldTile, up, left, right, down, heatTransferConstant);
@@ -92,10 +122,6 @@ bool calculateHeatMatrix(HeatMatrix &heatMatrix, HeatMatrix &tmpHeatMatrix,
     }
 
     heatMatrix.swap(tmpHeatMatrix);
-
-    /* TODO: Put this to another method*/
-    return heatMatrix.checkForConversion(tmpHeatMatrix, convergenceLimit,
-                                         parallelFlag);
 }
 
 /**

@@ -11,10 +11,15 @@ float calculateNextTempOfTile(float tile, float up, float left, float right,
 bool calculateHeatMatrix(float **heatMatrix, float **tmpHeatMatrix, int rows,
                          int cols, float heatTransferConstant,
                          bool parallelFlag, float convergenceLimit);
-bool calculateHeatMatrix(HeatMatrix &heatMatrix, HeatMatrix &tmpHeatMatrix, int rows,
-                         int cols, float heatTransferConstant,
+bool calculateHeatMatrix(HeatMatrix &heatMatrix, HeatMatrix &tmpHeatMatrix,
+                         int rows, int cols, float heatTransferConstant,
                          bool parallelFlag, float convergenceLimit);
-bool zeroOrRim(int value, int dimensions);
+void calculateHeatMatrixInnerFunction(HeatMatrix &heatMatrix,
+                                      HeatMatrix &tmpHeatMatrix, int rows,
+                                      int cols, float heatTransferConstant,
+                                      bool parallelFlag, float convergenceLimit,
+                                      int offset);
+bool outOfMatrixBounds(int value, int dimensions);
 void setColorForTemperature(float temperature, cv::Vec3b &pixel);
 } // namespace heatFunctions
 #endif // HEAT_FUNCTIONS_
