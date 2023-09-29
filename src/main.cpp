@@ -83,6 +83,13 @@ void createVideo(float **storedMatrices[], int numberOfSteps) {
     videoWriter.release();
 }
 
+/**
+ * @brief Main function for the program
+ *
+ * @param[in] argc number of parameters
+ * @param[in] argv parameters
+ * @return wether or not the program was successful
+ */
 int main(int argc, char *argv[]) {
     setValuesFromParams(argc, argv);
     omp_set_num_threads(numberOfThreads);
@@ -110,7 +117,6 @@ int main(int argc, char *argv[]) {
                                         heatTransferConstant, parallelFlag,
                                         convergenceLimit);
 
-        stop = high_resolution_clock::now();
 
         // Store the new matrix in storedMatrices
         /* storedMatrices[i] = newMatrix; */
@@ -121,10 +127,11 @@ int main(int argc, char *argv[]) {
             break;
         }
     }
+    stop = high_resolution_clock::now();
 
     auto duration = duration_cast<milliseconds>(stop - start);
     printf("Took %li ms\n", duration.count());
-    heatMatrix.printMatrix();
+    /* heatMatrix.printMatrix(); */
 
     /* createVideo(storedMatrices, convergedAfterSteps); */
 

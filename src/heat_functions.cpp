@@ -32,13 +32,6 @@ float calculateNextTempOfTile(float tile, float up, float left, float right,
     float newTile = tile + heatTransferConstant * (right + left - 2 * tile) +
                     heatTransferConstant * (up + down - 2 * tile);
 
-    // Print the parameter values for debugging
-    /* std::cout << "tile: " << tile << std::endl; */
-    /* std::cout << "up: " << up << std::endl; */
-    /* std::cout << "left: " << left << std::endl; */
-    /* std::cout << "right: " << right << std::endl; */
-    /* std::cout << "down: " << down << std::endl; */
-    /* std::cout << "newTile: " << newTile << std::endl; */
     return newTile;
 }
 
