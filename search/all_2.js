@@ -1,9 +1,4 @@
 var searchData=
 [
-  ['getmatrixdata_10',['getMatrixData',['../classHeatMatrix.html#a2cacbffd0d37057ea0be9f7e3e5a53ad',1,'HeatMatrix']]],
-  ['getnumberofcols_11',['getNumberOfCols',['../classHeatMatrix.html#afcb79c9d20bdea5f549bf89ace7199b9',1,'HeatMatrix']]],
-  ['getnumberofrows_12',['getNumberOfRows',['../classHeatMatrix.html#ab5bad42fc3306cc4a37968f5cc9ce0be',1,'HeatMatrix']]],
-  ['getrawsliceofmatrix_13',['getRawSliceOfMatrix',['../classHeatMatrix.html#af0d28a3d4dc2c6b10dd89e1f8046b844',1,'HeatMatrix']]],
-  ['getsliceofmatrix_14',['getSliceOfMatrix',['../classHeatMatrix.html#a91501b5eccbb128f200a46bb7ee82474',1,'HeatMatrix']]],
-  ['gettempat_15',['getTempAt',['../classHeatMatrix.html#ada5c24896cf2cbf4672d9af58833f317',1,'HeatMatrix']]]
+  ['filename_11',['filename',['../namespacerandom__matrix__csv.html#ae0b0f20764bf57b520bffa707260e2ba',1,'random_matrix_csv.filename()'],['../main_8cpp.html#a3a1a90139c2c8ab1fca0ea8b1790b7b2',1,'filename():&#160;main.cpp']]]
 ];

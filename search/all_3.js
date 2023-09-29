@@ -1,10 +1,10 @@
 var searchData=
 [
-  ['heat_5ffunctions_2ecpp_16',['heat_functions.cpp',['../heat__functions_8cpp.html',1,'']]],
-  ['heat_5ffunctions_2ehpp_17',['heat_functions.hpp',['../heat__functions_8hpp.html',1,'']]],
-  ['heatfunctions_18',['heatFunctions',['../namespaceheatFunctions.html',1,'']]],
-  ['heatmatrix_19',['HeatMatrix',['../classHeatMatrix.html',1,'HeatMatrix'],['../classHeatMatrix.html#a56d13c58f49a353bd946908f739fd16f',1,'HeatMatrix::HeatMatrix(int rows, int cols)'],['../classHeatMatrix.html#a4e516bb2d2361a8f5f90505999f15989',1,'HeatMatrix::HeatMatrix(std::vector&lt; std::vector&lt; float &gt;&gt; matrix)'],['../classHeatMatrix.html#a61ebf27e77577ca6b9fc880067ff20e1',1,'HeatMatrix::HeatMatrix(HeatMatrix &amp;&amp;)=default'],['../classHeatMatrix.html#ae23c32dd614cac4ce5ddcad4fe93640a',1,'HeatMatrix::HeatMatrix(const HeatMatrix &amp;)=default']]],
-  ['heatmatrix_2ecpp_20',['HeatMatrix.cpp',['../HeatMatrix_8cpp.html',1,'']]],
-  ['heatmatrix_2ehpp_21',['HeatMatrix.hpp',['../HeatMatrix_8hpp.html',1,'']]],
-  ['heattransferconstant_22',['heatTransferConstant',['../main_8cpp.html#a953b97d7cefe0726d26a2fd5fc532bbe',1,'main.cpp']]]
+  ['generate_5frandom_5fcsv_12',['generate_random_csv',['../namespacerandom__matrix__csv.html#ad64ecc018d876560796c1f5f2ce8f2a5',1,'random_matrix_csv']]],
+  ['getmatrixdata_13',['getMatrixData',['../classHeatMatrix.html#a2cacbffd0d37057ea0be9f7e3e5a53ad',1,'HeatMatrix']]],
+  ['getnumberofcols_14',['getNumberOfCols',['../classHeatMatrix.html#afcb79c9d20bdea5f549bf89ace7199b9',1,'HeatMatrix']]],
+  ['getnumberofrows_15',['getNumberOfRows',['../classHeatMatrix.html#ab5bad42fc3306cc4a37968f5cc9ce0be',1,'HeatMatrix']]],
+  ['getrawsliceofmatrix_16',['getRawSliceOfMatrix',['../classHeatMatrix.html#af0d28a3d4dc2c6b10dd89e1f8046b844',1,'HeatMatrix']]],
+  ['getsliceofmatrix_17',['getSliceOfMatrix',['../classHeatMatrix.html#a91501b5eccbb128f200a46bb7ee82474',1,'HeatMatrix']]],
+  ['gettempat_18',['getTempAt',['../classHeatMatrix.html#ada5c24896cf2cbf4672d9af58833f317',1,'HeatMatrix']]]
 ];

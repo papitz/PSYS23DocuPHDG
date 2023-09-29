@@ -72,20 +72,25 @@ Documentation</h1>
 <h1><a class="anchor" id="autotoc_md2"></a>
 Build</h1>
 <p>This project is built with cmake and make. Run these commands to build it:</p>
-<div class="fragment"><div class="line">cmake . &amp;&amp; make</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md3"></a>
+<div class="fragment"><div class="line">cmake -S . -B build &amp;&amp; cmake --build build</div>
+</div><!-- fragment --> <h1><a class="anchor" id="autotoc_md3"></a>
 Run</h1>
 <p>Run the program like this:</p>
 <div class="fragment"><div class="line">./HeatMatrix ROWS(int) COLS(int) NUMBER_OF_STEPS(int) STARTING_HEAT(float) HEAT_TRANSFER_CONSTANT(float) CONVERGENCE_LIMIT(float) PARALLEL_FLAG(0 or 1) NUMBER_OF_THREADS(int)</div>
 </div><!-- fragment --><p>All the things written in caps should be replaced with actual values</p>
 <h1><a class="anchor" id="autotoc_md4"></a>
+Testing</h1>
+<p>To run the tests they have to be compiled first. </p><div class="fragment"><div class="line">cd test</div>
+<div class="line">cmake . &amp;&amp; cmake --build</div>
+</div><!-- fragment --><p> They can then be run like this: </p><div class="fragment"><div class="line">./t_HeatMatrix</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md5"></a>
 TODO</h1>
 <ul>
 <li>[x] Doxygen</li>
-<li>[ ] Unit Tests</li>
-<li>[ ] MPI</li>
-<li>[ ] Measure Speedup</li>
-<li>[ ] CI/CD Unit Tests</li>
+<li>[x] Unit Tests</li>
+<li>[x] MPI</li>
+<li>[x] Measure Speedup</li>
+<li>[x] CI/CD Unit Tests</li>
 <li>[ ] Compiler Flags </li>
 </ul>
 </div></div><!-- contents -->

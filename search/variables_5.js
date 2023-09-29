@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['rows_90',['rows',['../main_8cpp.html#a061459acc9e078fa4699e0e349887215',1,'main.cpp']]]
+  ['parallelflag_107',['parallelFlag',['../mpi__main_8cpp.html#ac13bec001fd57f5b43cfd46aa7e8bf27',1,'parallelFlag():&#160;mpi_main.cpp'],['../main_8cpp.html#ac13bec001fd57f5b43cfd46aa7e8bf27',1,'parallelFlag():&#160;main.cpp']]]
 ];

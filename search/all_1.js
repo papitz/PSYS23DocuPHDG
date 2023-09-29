@@ -6,7 +6,8 @@ var searchData=
   ['checkforconversion_4',['checkForConversion',['../classHeatMatrix.html#aeeab2018fad42e5d00ec9a85c1805225',1,'HeatMatrix']]],
   ['collectmatricesaftermpicalc_5',['collectMatricesAfterMPICalc',['../classHeatMatrix.html#aabb0ea3f9d2f2793a8e6dc8d79986eed',1,'HeatMatrix']]],
   ['collectrawmatricesaftermpicalc_6',['collectRawMatricesAfterMPICalc',['../classHeatMatrix.html#a015648c1b13b7b62001d8961444d0a18',1,'HeatMatrix']]],
-  ['cols_7',['cols',['../main_8cpp.html#a4407a60bc4387adae24cee658711f2d9',1,'main.cpp']]],
-  ['convergencelimit_8',['convergenceLimit',['../main_8cpp.html#ab874ade08e445c96db60621bf1e7714e',1,'main.cpp']]],
-  ['createvideo_9',['createVideo',['../main_8cpp.html#ad555078fee68a40b0978339e19ee22f1',1,'main.cpp']]]
+  ['cols_7',['cols',['../namespacerandom__matrix__csv.html#ad39c5703000190176012ff39e8bf6494',1,'random_matrix_csv']]],
+  ['convergencelimit_8',['convergenceLimit',['../mpi__main_8cpp.html#ab874ade08e445c96db60621bf1e7714e',1,'convergenceLimit():&#160;mpi_main.cpp'],['../main_8cpp.html#ab874ade08e445c96db60621bf1e7714e',1,'convergenceLimit():&#160;main.cpp']]],
+  ['createvideo_9',['createVideo',['../main_8cpp.html#a225614af9fd4a033a5689eba4857d4e2',1,'main.cpp']]],
+  ['createvideoflag_10',['createVideoFlag',['../main_8cpp.html#ad73ff842b4564ca06c51fd681e58ae9a',1,'main.cpp']]]
 ];
