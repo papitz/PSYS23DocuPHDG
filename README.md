@@ -14,9 +14,8 @@ This project is built with cmake and make.
 Run these commands to build it:
 
 ```
-cmake . && make
+cmake -S . -B build && cmake --build build
 ```
-
 ## Run
 
 Run the program like this:
@@ -27,13 +26,24 @@ Run the program like this:
 
 All the things written in caps should be replaced with actual values
 
+## Testing
+To run the tests they have to be compiled first.
+```
+cd test
+cmake . && cmake --build
+```
+They can then be run like this:
+```
+./t_HeatMatrix
+```
+
 ## TODO
 
 - [x] Doxygen
-- [ ] Unit Tests
-- [ ] MPI
-- [ ] Measure Speedup
-- [ ] CI/CD Unit Tests
+- [x] Unit Tests
+- [x] MPI
+- [x] Measure Speedup
+- [x] CI/CD Unit Tests
 - [ ] Compiler Flags
 
 
