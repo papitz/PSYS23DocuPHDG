@@ -4,7 +4,7 @@
     - apk update
     - apk add cmake make g++ git opencv-dev libgomp openmpi openmpi-dev
     - apk add valgrind
-    - sudo ln -s /usr/include/opencv4/opencv2 /usr/include/opencv2
+    - ln -s /usr/include/opencv4/opencv2 /usr/include/opencv2
 
 build:
   stage: build
