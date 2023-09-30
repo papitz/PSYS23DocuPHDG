@@ -34,8 +34,7 @@
   image: ubuntu:latest
   before_script:
     - apt-get update
-    - apt-get install -y cmake make g++ git libopencv-dev libgomp1
-    - apt-get install -y valgrind
+    - DEBIAN_FRONTEND=noninteractive apt-get -yq install -y cmake make g++ git libopencv-dev libgomp1 valgrind
 
 build:
   stage: build
