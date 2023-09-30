@@ -41,7 +41,7 @@ mpirun:
   <<: *alpine_cmake_test
   script:
     - apk add openssh
-    - mpiexec --allow-run-as-root -n 4 ./mpi/mpi_run
+    - mpiexec --allow-run-as-root -n 2 ./mpi/mpi_run
   tags: [Linux]
 
 memcheck:
