@@ -1,40 +1,9 @@
-# image: papitz/psys-runner:latest
-#
-# build:
-#   stage: build
-#   tags: [Linux]
-#   script:
-#     - mkdir build
-#     - cmake -S . -B build
-#     - cmake --build build
-#
-#   artifacts:
-#     paths:
-#       - build/HeatMatrix
-#
-# ctest:
-#   stage: test
-#   script:
-#     - cd test
-#     - cmake .
-#     - cmake --build .
-#     - ./t_HeatMatrix --gtest_output="xml:unittestResults.xml"
-#   tags: [Linux]
-#   artifacts:
-#     paths:
-#       - test/unittestResults.xml
-#     reports:
-#       junit: test/unittestResults.xml
 .alpine_cmake_test: &alpine_cmake_test
-  # image: alpine
-  # before_script:
-  #   - apk update
-  #   - apk add cmake make g++ git opencv-dev libgomp
-  #   - apk add valgrind
-  image: ubuntu:latest
+  image: alpine
   before_script:
-    - apt-get update
-    - DEBIAN_FRONTEND=noninteractive apt-get -yq install -y cmake make g++ git libopencv-dev libgomp1 valgrind
+    - apk update
+    - apk add cmake make g++ git opencv-dev libgomp
+    - apk add valgrind
 
 build:
   stage: build
