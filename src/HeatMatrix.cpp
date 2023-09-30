@@ -148,7 +148,7 @@ HeatMatrix::getRawSliceOfMatrix(int divider, int processNumber) {
     // Either row 0 or the second to last row of the next block
     auto startRow =
         processNumber == 0 ? 0 : (processNumber * rowsPerProcess - 1);
-    // Eihter the last row or the second row of the next block
+    // Either the last row or the second row of the next block
     auto endRow = divider - 1 == processNumber
                       ? matrixCols - 1
                       : (processNumber + 1) * rowsPerProcess;

@@ -140,7 +140,7 @@ vector<vector<float>> readCSV(const string &filename) {
  */
 void createVideo(vector<vector<vector<float>>> storedMatrices, float maxTemp) {
     cv::VideoWriter videoWriter;
-    videoWriter.open("stored_matrices_new.mp4",
+    videoWriter.open("stored_matrices.mp4",
                      cv::VideoWriter::fourcc('a', 'v', 'c', '1'), 10,
                      cv::Size(matrixCols, matrixRows));
 

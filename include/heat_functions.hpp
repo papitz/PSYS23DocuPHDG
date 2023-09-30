@@ -17,8 +17,7 @@ bool calculateHeatMatrix(HeatMatrix &heatMatrix, HeatMatrix &tmpHeatMatrix,
 void calculateHeatMatrixInnerFunction(HeatMatrix &heatMatrix,
                                       HeatMatrix &tmpHeatMatrix, int rows,
                                       int cols, float heatTransferConstant,
-                                      bool parallelFlag, float convergenceLimit,
-                                      int offset);
+                                      bool parallelFlag, int offset);
 bool outOfMatrixBounds(int value, int dimensions);
 void setColorForTemperature(float temperature, float maxTemp, cv::Vec3b &pixel);
 } // namespace heatFunctions

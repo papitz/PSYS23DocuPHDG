@@ -2,7 +2,7 @@
   image: alpine
   before_script:
     - apk update
-    - apk add cmake make g++ git opencv-dev libgomp
+    - apk add cmake make g++ git opencv-dev libgomp openmpi openmpi-dev
     - apk add valgrind
 
 build:
@@ -13,15 +13,19 @@ build:
     - mkdir build
     - cmake -S . -B build
     - cmake --build build
+    - cd mpi
+    - mpicxx -o mpi_run mpi_main.cpp ../src/HeatMatrix.cpp ../src/heat_functions.cpp
 
   artifacts:
     paths:
       - build/HeatMatrix
+      - mpi/mpi_run
 
 gtest:
   stage: test
   <<: *alpine_cmake_test
   script:
+    - mpiexec -n 4 ./mpi/mpi_run
     - cd test
     - cmake .
     - cmake --build .
