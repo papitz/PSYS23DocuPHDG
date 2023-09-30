@@ -51,7 +51,7 @@ build:
       - build/HeatMatrix
 
 gtest:
-  stage: unit-test
+  stage: test
   <<: *alpine_cmake_test
   script:
     - cd test
@@ -66,7 +66,7 @@ gtest:
       junit: test/unittestResults.xml
 
 memcheck:
-  stage: mem-test
+  stage: test
   <<: *alpine_cmake_test
   script:
     - cd build
