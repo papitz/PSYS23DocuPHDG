@@ -92,9 +92,6 @@ void calculateHeatMatrixInnerFunction(HeatMatrix &heatMatrix, HeatMatrix &tmpHea
                          int rows, int cols, float heatTransferConstant,
                          bool parallelFlag, int offset) {
 
-    /* std::cout << "rows: " << rows << " cols: " << cols << std::endl; */
-    /* heatMatrix.printMatrix(); */
-    /* auto start = high_resolution_clock::now(); */
 #pragma omp parallel if (parallelFlag)
     {
 #pragma omp for collapse(2)

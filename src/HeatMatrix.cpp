@@ -37,7 +37,6 @@ HeatMatrix::HeatMatrix(std::vector<std::vector<float>> matrix)
  *
  * @throws std::invalid_argument when the point is not in the matrix
  */
-/* TODO: Check if the exception checking is impacting performance*/
 void HeatMatrix::setTempAt(int x, int y, float targetTemp) {
     if (x >= matrixRows) {
         throw std::invalid_argument(
@@ -76,7 +75,6 @@ void HeatMatrix::setTempInArea(int xStart, int xEnd, int yStart, int yEnd,
  *
  * @throws std::invalid_argument when the point is not in the matrix
  */
-/* TODO: Check if the exception checking is impacting performance*/
 float HeatMatrix::getTempAt(int x, int y) {
     if (x >= matrixRows) {
         throw std::invalid_argument(
@@ -157,14 +155,6 @@ HeatMatrix::getRawSliceOfMatrix(int divider, int processNumber) {
     for (int i = startRow; i <= endRow; i++) {
         newMatrixVector.push_back(std::vector(matrix[i]));
     }
-
-    // Print the matrix for debuggging
-    /* for (const std::vector<float> &row : newMatrix) { */
-    /*     for (float value : row) { */
-    /*         std::cout << value << " "; */
-    /*     } */
-    /*     std::cout << std::endl; */
-    /* } */
 
     return newMatrixVector;
 }

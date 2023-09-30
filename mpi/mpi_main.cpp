@@ -56,6 +56,7 @@ int main(int argc, char **argv) {
 
     setValuesFromParams(argc, argv);
 
+
     MPI_Init(&argc, &argv);
 
     int rank, num_processes;
@@ -93,7 +94,6 @@ int main(int argc, char **argv) {
             // Split the original matrix into slices and send them to other
             // processes
             for (int dest = 1; dest < num_processes; ++dest) {
-                /* std::cout << dest << originalMatrix.getSliceOfMatrix(num_processes, dest) << std::endl; */
                 std::vector<std::vector<float>> slice =
                     originalMatrix.getRawSliceOfMatrix(num_processes, dest);
                 int dataSize = slice.size();
@@ -128,14 +128,8 @@ int main(int argc, char **argv) {
 
             HeatMatrix hm(receivedData);
             HeatMatrix tmpHM(hm.getNumberOfRows(), hm.getNumberOfCols());
-            /* std::cout << "rank: " << rank << " rows: " <<
-             * hm.getNumberOfRows() */
-            /*           << " cols: " << hm.getNumberOfCols() << "\n"; */
-            /* std::cout << "rank: " << rank << " before\n"; */
             calculateHeatMatrixInnerFunction(hm, tmpHM, hm.getNumberOfRows(),
                                 hm.getNumberOfCols(), heatTransferConstant, false, 1);
-            /* std::cout << "rank: " << rank << " after\n"; */
-            /* hm.printMatrix(); */
 
             MPI_Send(&numRows, 1, MPI_INT, 0, 0, MPI_COMM_WORLD);
             receivedData = hm.getMatrixData();
@@ -179,13 +173,6 @@ int main(int argc, char **argv) {
                     MPI_Recv(receivedData.data(), numCols, MPI_FLOAT, src, 0,
                              MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
-                    // Process and print the received data
-                    /* std::cout << "Received data from process " << src */
-                    /*           << " (Vector " << i << "): "; */
-                    /* for (float value : receivedData) { */
-                    /*     std::cout << value << " "; */
-                    /* } */
-                    /* std::cout << std::endl; */
                     receivedMatrixData.push_back(receivedData);
                 }
                 receivedSlices.push_back(HeatMatrix(receivedMatrixData));
@@ -193,8 +180,6 @@ int main(int argc, char **argv) {
             // Combine the received slices into the final matrix
             HeatMatrix finalMatrix =
                 HeatMatrix::collectMatricesAfterMPICalc(receivedSlices);
-            /* std::cout << "originalMatrix: \n" << originalMatrix; */
-            /* std::cout << "finalMatrix: \n" << finalMatrix; */
             finalMatrix.swap(originalMatrix);
 
             notConverged = (!originalMatrix.checkForConversion(
@@ -218,7 +203,6 @@ int main(int argc, char **argv) {
 
     if (rank == 0) {
         std::cout << "final after " << iterations << " iterations\n";
-        /* originalMatrix.printMatrix(); */
     }
 
     MPI_Finalize();

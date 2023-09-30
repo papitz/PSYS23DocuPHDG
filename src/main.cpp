@@ -215,7 +215,6 @@ int main(int argc, char *argv[]) {
 
     auto duration = duration_cast<milliseconds>(stop - start);
     printf("Took %li ms\n", duration.count());
-    /* heatMatrix.printMatrix(); */
 
     if (createVideoFlag) {
         createVideo(storedMatrices, startingHeat);
