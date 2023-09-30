@@ -26,7 +26,6 @@ gtest:
   stage: test
   <<: *alpine_cmake_test
   script:
-    - mpiexec -n 4 ./mpi/mpi_run
     - cd test
     - cmake .
     - cmake --build .
@@ -37,6 +36,13 @@ gtest:
       - test/unittestResults.xml
     reports:
       junit: test/unittestResults.xml
+
+mpirun:
+  stage: test
+  <<: *alpine_cmake_test
+  script:
+    - mpiexec --allow-run-as-root -n 4 ./mpi/mpi_run
+  tags: [Linux]
 
 memcheck:
   stage: test
