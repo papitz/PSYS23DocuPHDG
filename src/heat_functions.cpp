@@ -67,10 +67,7 @@ bool calculateHeatMatrix(HeatMatrix &heatMatrix, HeatMatrix &tmpHeatMatrix,
                          int rows, int cols, float heatTransferConstant,
                          bool parallelFlag, float convergenceLimit) {
 
-    /* std::cout << "rows: " << rows << " cols: " << cols << std::endl; */
-    /* heatMatrix.printMatrix(); */
-    /* auto start = high_resolution_clock::now(); */
-    calculateHeatMatrixInnerFunction(heatMatrix, tmpHeatMatrix, rows, cols, heatTransferConstant, parallelFlag, convergenceLimit, 0);
+    calculateHeatMatrixInnerFunction(heatMatrix, tmpHeatMatrix, rows, cols, heatTransferConstant, parallelFlag, 0);
 
     return heatMatrix.checkForConversion(tmpHeatMatrix, convergenceLimit,
                                          parallelFlag);
@@ -88,14 +85,12 @@ bool calculateHeatMatrix(HeatMatrix &heatMatrix, HeatMatrix &tmpHeatMatrix,
  * transfered
  * @param[in] parallelFlag flag that decides if things are calculated in
  * parallel or not
- * @param[in] convergenceLimit limit at which delta of temp we count the matrix
- * as converged
  * @param[in] offset how many rows to skip at top and bottom
  * @return if matrix is converged or not
  */
 void calculateHeatMatrixInnerFunction(HeatMatrix &heatMatrix, HeatMatrix &tmpHeatMatrix,
                          int rows, int cols, float heatTransferConstant,
-                         bool parallelFlag, float convergenceLimit, int offset) {
+                         bool parallelFlag, int offset) {
 
     /* std::cout << "rows: " << rows << " cols: " << cols << std::endl; */
     /* heatMatrix.printMatrix(); */
@@ -130,8 +125,10 @@ void calculateHeatMatrixInnerFunction(HeatMatrix &heatMatrix, HeatMatrix &tmpHea
  * @param[in] temperature Temperature to set the corresponding color to
  * @param[out] pixel Pixel that will get set
  */
-void setColorForTemperature(float temperature, cv::Vec3b &pixel) {
-    switch ((int)(temperature / 75)) {
+void setColorForTemperature(float temperature, float maxTemp, cv::Vec3b &pixel) {
+    // Changes at what point temperatures will appear as black. Change this to your liking depending on the video you want
+    int temperatureResolution = 200;
+    switch ((int)(temperature / maxTemp * temperatureResolution)) {
     case 0:
         pixel[0] = 0;
         pixel[1] = 0;

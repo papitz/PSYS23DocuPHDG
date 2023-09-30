@@ -3,7 +3,8 @@
 
 namespace heatFunctions {
 
-// Test calculateNextTempOfTile function
+/** Test calculateNextTempOfTile function
+ */
 TEST(HeatFunctionsTest, CalculateNextTempOfTile) {
     float tile = 10.0;
     float up = 20.0;
@@ -18,8 +19,9 @@ TEST(HeatFunctionsTest, CalculateNextTempOfTile) {
     ASSERT_FLOAT_EQ(newTile, 12.5);
 }
 
-// Test zeroOrRim function
-TEST(HeatFunctionsTest, ZeroOrRim) {
+/** Test zeroOrRim function
+*/
+TEST(HeatFunctionsTest, outOfMatrixBounds) {
     int dimensions = 5;
 
     // Test values on the rim
@@ -31,7 +33,8 @@ TEST(HeatFunctionsTest, ZeroOrRim) {
     ASSERT_FALSE(outOfMatrixBounds(3, dimensions));
 }
 
-// Test calculateHeatMatrix function
+/** Test calculateHeatMatrix function
+*/
 TEST(HeatFunctionsTest, CalculateHeatMatrix) {
     int rows = 3;
     int cols = 3;

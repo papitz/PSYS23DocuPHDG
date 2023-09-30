@@ -1,19 +1,29 @@
-image: papitz/psys-runner:latest
+.alpine_cmake_test: &alpine_cmake_test
+  image: alpine
+  before_script:
+    - apk update
+    - apk add cmake make g++ git opencv-dev libgomp openmpi openmpi-dev
+    - ln -s /usr/include/opencv4/opencv2 /usr/include/opencv2
 
 build:
   stage: build
+  <<: *alpine_cmake_test
   tags: [Linux]
   script:
     - mkdir build
     - cmake -S . -B build
     - cmake --build build
+    - cd mpi
+    - mpicxx -o mpi_run mpi_main.cpp ../src/HeatMatrix.cpp ../src/heat_functions.cpp
 
   artifacts:
     paths:
       - build/HeatMatrix
+      - mpi/mpi_run
 
-ctest:
+gtest:
   stage: test
+  <<: *alpine_cmake_test
   script:
     - cd test
     - cmake .
@@ -25,3 +35,21 @@ ctest:
       - test/unittestResults.xml
     reports:
       junit: test/unittestResults.xml
+
+mpirun:
+  stage: test
+  <<: *alpine_cmake_test
+  script:
+    - apk add openssh
+    - mpiexec --allow-run-as-root --oversubscribe -n 2 ./mpi/mpi_run
+  tags: [Linux]
+
+memcheck:
+  stage: test
+  <<: *alpine_cmake_test
+  script:
+    - apk add valgrind
+    - cd build
+    - valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --show-error-list=yes ./HeatMatrix
+    - valgrind --tool=helgrind -s ./HeatMatrix 100 100 1500.0 100 0.025 0.1 1 4 0
+  tags: [Linux]
