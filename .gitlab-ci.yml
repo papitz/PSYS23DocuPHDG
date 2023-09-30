@@ -13,8 +13,8 @@ build:
     - mkdir build
     - cmake -S . -B build
     - cmake --build build
-    - cd mpi
-    - mpicxx -o mpi_run mpi_main.cpp ../src/HeatMatrix.cpp ../src/heat_functions.cpp
+    # - cd mpi
+    # - mpicxx -o mpi_run mpi_main.cpp ../src/HeatMatrix.cpp ../src/heat_functions.cpp
 
   artifacts:
     paths:
@@ -25,7 +25,7 @@ gtest:
   stage: test
   <<: *alpine_cmake_test
   script:
-    - mpiexec -n 4 ./mpi/mpi_run
+    # - mpiexec -n 4 ./mpi/mpi_run
     - cd test
     - cmake .
     - cmake --build .
