@@ -68,32 +68,31 @@ $(function() {
 <div class="textblock"><p>Repo zur Belegarbeit im Fach Parallel Systems im SoSe 2023</p>
 <h1><a class="anchor" id="autotoc_md1"></a>
 Documentation</h1>
-<p>Documentation can be viewed <a href="https://papitz.github.io/PSYS23DocuPHDG/">here</a>. To generate it you need to push to GitHub since it is hosted as a github page. Any push to any GitHub branch will generate the Documentation.</p>
+<p>Documentation can be viewed <a href="https://papitz.github.io/PSYS23DocuPHDG/">here</a>. To generate it you need to push to GitHub since it is hosted as a github page. Any push to any <b>GitHub</b> branch will generate the Documentation.</p>
 <h1><a class="anchor" id="autotoc_md2"></a>
 Build</h1>
 <p>This project is built with cmake and make. Run these commands to build it:</p>
 <div class="fragment"><div class="line">cmake -S . -B build &amp;&amp; cmake --build build</div>
-</div><!-- fragment --> <h1><a class="anchor" id="autotoc_md3"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md3"></a>
 Run</h1>
 <p>Run the program like this:</p>
-<div class="fragment"><div class="line">./HeatMatrix ROWS(int) COLS(int) NUMBER_OF_STEPS(int) STARTING_HEAT(float) HEAT_TRANSFER_CONSTANT(float) CONVERGENCE_LIMIT(float) PARALLEL_FLAG(0 or 1) NUMBER_OF_THREADS(int)</div>
+<div class="fragment"><div class="line">./HeatMatrix ROWS(int) COLS(int) STARTING_HEAT(float) NUMBER_OF_STEPS(int) HEAT_TRANSFER_CONSTANT(float) CONVERGENCE_LIMIT(float) PARALLEL_FLAG(0 or 1) NUMBER_OF_THREADS(int)</div>
+</div><!-- fragment --><p>Or like this</p>
+<div class="fragment"><div class="line">./HeatMatrix FILENAME(string) NUMBER_OF_STEPS(int) HEAT_TRANSFER_CONSTANT(float) CONVERGENCE_LIMIT(float) PARALLEL_FLAG(0 or 1) NUMBER_OF_THREADS(int)</div>
 </div><!-- fragment --><p>All the things written in caps should be replaced with actual values</p>
-<h1><a class="anchor" id="autotoc_md4"></a>
+<p>To use a file just use a csv representation of a matrix. Example:</p>
+<div class="fragment"><div class="line">0.0,0.0,0.0,0.0</div>
+<div class="line">0.0,0.0,100.0,0.0</div>
+<div class="line">0.0,222.0,0.0,0.0</div>
+<div class="line">0.0,0.0,0.0,0.0</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md4"></a>
 Testing</h1>
-<p>To run the tests they have to be compiled first. </p><div class="fragment"><div class="line">cd test</div>
-<div class="line">cmake . &amp;&amp; cmake --build</div>
-</div><!-- fragment --><p> They can then be run like this: </p><div class="fragment"><div class="line">./t_HeatMatrix</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md5"></a>
-TODO</h1>
-<ul>
-<li>[x] Doxygen</li>
-<li>[x] Unit Tests</li>
-<li>[x] MPI</li>
-<li>[x] Measure Speedup</li>
-<li>[x] CI/CD Unit Tests</li>
-<li>[ ] Compiler Flags </li>
-</ul>
-</div></div><!-- contents -->
+<p>To run the tests they have to be compiled first.</p>
+<div class="fragment"><div class="line">cd test</div>
+<div class="line">cmake . &amp;&amp; cmake --build .</div>
+</div><!-- fragment --><p>They can then be run like this:</p>
+<div class="fragment"><div class="line">./t_HeatMatrix</div>
+</div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
