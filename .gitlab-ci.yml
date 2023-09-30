@@ -26,11 +26,16 @@
 #     reports:
 #       junit: test/unittestResults.xml
 .alpine_cmake_test: &alpine_cmake_test
-  image: alpine
+  # image: alpine
+  # before_script:
+  #   - apk update
+  #   - apk add cmake make g++ git opencv-dev libgomp
+  #   - apk add valgrind
+  image: ubuntu:latest
   before_script:
-    - apk update
-    - apk add cmake make g++ git opencv-dev libgomp
-    - apk add valgrind
+    - apt-get update
+    - apt-get install -y cmake make g++ git libopencv-dev libgomp1
+    - apt-get install -y valgrind
 
 build:
   stage: build
@@ -46,7 +51,7 @@ build:
       - build/HeatMatrix
 
 gtest:
-  stage: test
+  stage: unit-test
   <<: *alpine_cmake_test
   script:
     - cd test
@@ -61,7 +66,7 @@ gtest:
       junit: test/unittestResults.xml
 
 memcheck:
-  stage: test
+  stage: mem-test
   <<: *alpine_cmake_test
   script:
     - cd build

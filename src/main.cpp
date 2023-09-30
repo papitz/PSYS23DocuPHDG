@@ -35,9 +35,10 @@ int videoFrameModulo = 10;
 
 /**
  * @brief set all values from the parameter list.
- * The order is like this if you use it without a file: ROWS(int) COLS(int) STARTING_HEAT(float)
- * NUMBER_OF_STEPS(int) HEAT_TRANSFER_CONSTANT(float) CONVERGENCE_LIMIT(float)
- * PARALLEL_FLAG(0 or 1) NUMBER_OF_THREADS(int) VIDEO_FLAG(0 or 1)
+ * The order is like this if you use it without a file: ROWS(int) COLS(int)
+ * STARTING_HEAT(float) NUMBER_OF_STEPS(int) HEAT_TRANSFER_CONSTANT(float)
+ * CONVERGENCE_LIMIT(float) PARALLEL_FLAG(0 or 1) NUMBER_OF_THREADS(int)
+ * VIDEO_FLAG(0 or 1)
  *
  * The order is like this if you use it WITH a file: FILENAME(file)
  * NUMBER_OF_STEPS(int) HEAT_TRANSFER_CONSTANT(float) CONVERGENCE_LIMIT(float)
@@ -172,10 +173,12 @@ int main(int argc, char *argv[]) {
     vector<vector<vector<float>>> storedMatrices;
 
     // Initialize so we can use it outside the scope
-    HeatMatrix heatMatrix = (filename.empty()) ? HeatMatrix(matrixRows, matrixCols) : HeatMatrix(readCSV(filename));
+    HeatMatrix heatMatrix = (filename.empty())
+                                ? HeatMatrix(matrixRows, matrixCols)
+                                : HeatMatrix(readCSV(filename));
 
     if (filename.empty()) {
-        heatMatrix.setTempAt(matrixRows/2, matrixCols/2, startingHeat);
+        heatMatrix.setTempAt(matrixRows / 2, matrixCols / 2, startingHeat);
     } else {
         matrixRows = heatMatrix.getNumberOfRows();
         matrixCols = heatMatrix.getNumberOfCols();
@@ -214,7 +217,9 @@ int main(int argc, char *argv[]) {
     printf("Took %li ms\n", duration.count());
     /* heatMatrix.printMatrix(); */
 
-    createVideo(storedMatrices, startingHeat);
+    if (createVideoFlag) {
+        createVideo(storedMatrices, startingHeat);
+    }
 
     return 0;
 }
