@@ -3,7 +3,6 @@
   before_script:
     - apk update
     - apk add cmake make g++ git opencv-dev libgomp openmpi openmpi-dev
-    - apk add valgrind
     - ln -s /usr/include/opencv4/opencv2 /usr/include/opencv2
 
 build:
@@ -41,6 +40,7 @@ mpirun:
   stage: test
   <<: *alpine_cmake_test
   script:
+    - apk add openssh
     - mpiexec --allow-run-as-root -n 4 ./mpi/mpi_run
   tags: [Linux]
 
@@ -48,6 +48,7 @@ memcheck:
   stage: test
   <<: *alpine_cmake_test
   script:
+    - apk add valgrind
     - cd build
     - valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --show-error-list=yes ./HeatMatrix
     - valgrind --tool=helgrind -s ./HeatMatrix 100 100 1500.0 100 0.025 0.1 1 4 0
