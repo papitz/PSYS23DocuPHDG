@@ -133,7 +133,7 @@ int main(int argc, char **argv) {
             /*           << " cols: " << hm.getNumberOfCols() << "\n"; */
             /* std::cout << "rank: " << rank << " before\n"; */
             calculateHeatMatrixInnerFunction(hm, tmpHM, hm.getNumberOfRows(),
-                                hm.getNumberOfCols(), heatTransferConstant, false, convergenceLimit, 1);
+                                hm.getNumberOfCols(), heatTransferConstant, false, 1);
             /* std::cout << "rank: " << rank << " after\n"; */
             /* hm.printMatrix(); */
 
@@ -161,7 +161,7 @@ int main(int argc, char **argv) {
 
             calculateHeatMatrixInnerFunction(firstSlice, tmpMatrix,
                                 firstSlice.getNumberOfRows(),
-                                firstSlice.getNumberOfCols(), heatTransferConstant, false, convergenceLimit, 0);
+                                firstSlice.getNumberOfCols(), heatTransferConstant, false, 0);
 
             receivedSlices.push_back(firstSlice);
 
